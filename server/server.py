@@ -8,56 +8,7 @@ from YPHS.login import log_in, new_HW
 import getpass
 import datetime
 
-'''
-async def reply(websocket, path):
-    print('hello')
-    async for message in websocket:
-        print(message, 'received from client')
-        greeting = f"Hello {message}!"
-        await websocket.send(greeting)
-        print(f"> {greeting}")
-
-asyncio.get_event_loop().run_until_complete(
-    websockets.serve(reply, '0.0.0.0', 443))
-asyncio.get_event_loop().run_forever()
-'''
-
-greet = """
-您好。歡迎使用此聯絡簿登錄系統。
-在使用此軟體前，請先詳閱說明並遵守以下語法規範：
-（不須輸入引號）
-
-add \"類型\" \"科目\" \"內容\"
-add_old \"id\"
-show \"日期\"
-change \"id\" \"text\"
-remove \"id\"
-submit \"title\"
-
-P.S. type:
-0. 功課
-1. 小考
-2. 週考或段考
-3. 提醒事項
-4. 附件連結
-
-科目：
-ch: 國文
-en: 英文
-ma: 數學
-ph: 物理
-ch: 化學
-bi: 生物
-es: 地科
-hi: 歷史
-ge: 地理
-ci: 公民
-co: 電腦
-cr: 生科
-mu: 音樂
-ar: 美術
-ht: 導師
-"""
+table_name="HW107"
 
 line = "----------------------------------------------------------------------------------------\n"
 tab = "    "
@@ -187,8 +138,15 @@ def run(table_name, query):
     else:
         raise InputSyntaxError("Please check that you use the right syntax.")
 
+async def hello(websocket, path):
+  message = await websocket.recv()
+  print(f"< {message}")
+  run(table_name,message.split())
+  ret = "finished!"
+  await websocket.send(ret)
+  print(f"> {ret}")
 
 if __name__ == "__main__":
-    print(greet)
-    while True:
-        print(run("HW107", input("請輸入指令：").split()))
+  start_server = websockets.serve(hello, "0.0.0.0", 443)
+  asyncio.get_event_loop().run_until_complete(start_server)
+  asyncio.get_event_loop().run_forever()

@@ -4,13 +4,15 @@ import bs4
 import json
 import hashlib
 from YPHS.error import *
+import os
 
 pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221" #密碼的sha256 hash code，如果不知如何取得，請洽開發者
-account = ""  # 資訊股長帳號
-pw = "" # 資訊股長密碼
-cls_name = ""  # 導班代號
+account = os.environ['account']
+  # 資訊股長帳號
+pw = os.environ['password'] #資訊股長密碼
+cls_name = os.environ['class']  # 導班代號
 url = "https://www.yphs.tp.edu.tw/tea/tua-1.aspx"  # 延平後台網址
-with open("./YPHS/request.json") as ObjJson:  # 儲存header資訊
+with open("./server/YPHS/request.json") as ObjJson:  # 儲存header資訊
     headers_data = json.load(ObjJson)
 web = None  # 後台網頁
 session = None
