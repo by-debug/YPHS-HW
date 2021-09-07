@@ -8,7 +8,7 @@ from YPHS.login import log_in, new_HW
 import getpass
 import datetime
 
-table_name="HW107"
+table_name = "HW107"
 
 line = "----------------------------------------------------------------------------------------\n"
 tab = "    "
@@ -138,15 +138,17 @@ def run(table_name, query):
     else:
         raise InputSyntaxError("Please check that you use the right syntax.")
 
+
 async def hello(websocket, path):
-  message = await websocket.recv()
-  print(f"< {message}")
-  run(table_name,message.split())
-  ret = "finished!"
-  await websocket.send(ret)
-  print(f"> {ret}")
+    message = await websocket.recv()
+    print(f"< {message}")
+    ret = run(table_name, message.split())
+    if ret == None:
+        ret = "finished!"
+    await websocket.send(str(ret))
+    print(f"> {ret}")
 
 if __name__ == "__main__":
-  start_server = websockets.serve(hello, "0.0.0.0", 443)
-  asyncio.get_event_loop().run_until_complete(start_server)
-  asyncio.get_event_loop().run_forever()
+    start_server = websockets.serve(hello, "0.0.0.0", 443)
+    asyncio.get_event_loop().run_until_complete(start_server)
+    asyncio.get_event_loop().run_forever()

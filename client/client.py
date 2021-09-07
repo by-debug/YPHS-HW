@@ -41,14 +41,15 @@ ar: 美術
 ht: 導師
 """
 
-ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
-localhost_pem = pathlib.Path(__file__).with_name("localhost.pem")
-ssl_context.load_verify_locations(localhost_pem)
+ssl_context = ssl.SSLContext()
+ssl_context.check_hostname = False
+ssl_context.verify_mode = ssl.CERT_NONE
+
 
 async def query():
     uri = "wss://YPHS-HW.bydebug.repl.co"
-    async with websockets.connect(uri,ssl=ssl_context) as websocket:
-        command = input("請輸入指令")
+    async with websockets.connect(uri, ssl=ssl_context) as websocket:
+        command = input("請輸入指令：")
 
         await websocket.send(command)
         print(f"> {command}")
@@ -58,5 +59,5 @@ async def query():
 
 
 if __name__ == "__main__":
-  print(greet)
-  asyncio.get_event_loop().run_until_complete(query())
+    print(greet)
+    asyncio.get_event_loop().run_until_complete(query())
