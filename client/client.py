@@ -1,6 +1,8 @@
 import asyncio
 import websockets
 import ssl
+import pathlib
+import ssl
 
 greet = """
 您好。歡迎使用此聯絡簿登錄系統。
@@ -39,10 +41,13 @@ ar: 美術
 ht: 導師
 """
 
+ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
+localhost_pem = pathlib.Path(__file__).with_name("localhost.pem")
+ssl_context.load_verify_locations(localhost_pem)
+
 async def query():
     uri = "wss://YPHS-HW.bydebug.repl.co"
-    ws = websockets.WebSocket(sslopt={"cert_reqs": ssl.CERT_NONE})
-    async with ws.connect(uri) as websocket:
+    async with websockets.connect(uri,ssl=ssl_context) as websocket:
         command = input("請輸入指令")
 
         await websocket.send(command)
