@@ -133,7 +133,7 @@ def run(table_name, query):
         content += word[0] + '\n'
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
-        new_HW(pw, query[1], content, link)
+        new_HW(query[2], query[1], content, link)
     else:
         raise InputSyntaxError("Please check that you use the right syntax.")
 
