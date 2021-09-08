@@ -53,11 +53,11 @@ async def query():
     uri = "wss://YPHS-HW.bydebug.repl.co"
     async with websockets.connect(uri, ssl=ssl_context) as websocket:
         command = input("請輸入指令：")
-        if command[0:6]=="submit":
+        if command[0:6] == "submit":
             pw = getpass.getpass("請輸入密碼：")
-            await websocket.send(command+' ' + pw)
+            await websocket.send(command + ' ' + pw)
         else:
-            await websocket.send(command+' ' + pw)
+            await websocket.send(command)
         print(f"> {command}")
         rec = await websocket.recv()
         print(f"< {rec}")

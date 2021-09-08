@@ -95,6 +95,7 @@ def run(table_name, query):
                 content += test[0] + '\n'
             else:
                 j = 1
+                content += '\n'
                 for item in test:
                     content += tab + "（" + str(j) + "）" + item + '\n'
                     j += 1
@@ -109,6 +110,7 @@ def run(table_name, query):
                 content += exam[0] + '\n'
             else:
                 j = 1
+                content += '\n'
                 for item in exam:
                     content += tab + "（" + str(j) + "）" + item + '\n'
                     j += 1
@@ -123,6 +125,7 @@ def run(table_name, query):
                 content += note[0] + '\n'
             else:
                 j = 1
+                content += '\n'
                 for item in note:
                     content += tab + "（" + str(j) + "）" + item + '\n'
                     j += 1
