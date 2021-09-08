@@ -15,7 +15,7 @@ tab = "    "
 
 db = database("Homework.db")
 try:
-    db.create_table("HW107")
+    db.create_table(table_name)
 except:
     pass
 
@@ -36,12 +36,11 @@ def run(table_name, query):
     elif query[0] == "remove":
         db.delete(table_name, query[1])
     elif query[0] == "submit":
-        pw = getpass.getpass("Please enter the password:")
-        log_in(pw)
+        log_in(query[2])
         HW = db.select(table_name, datetime.datetime.now().strftime(
             '%Y/%m/%d'))  # (id,type,day,subject,content)"
-        subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "ch": "化學", "bi": "生物", "es": "地科",
-                    "hi": "歷史", "ge": "地理", "ci": "公民", "co": "電腦", "cr": "生科", "mu": "音樂", "ar": "美術", "ht": "導師"}
+        subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
+                    "hi": "歷史", "ge": "地理", "ci": "公民", "co": "電腦", "cr": "生科", "mu": "音樂", "ar": "美術", "ht": "導師", "coa": "輔導"}
         HWs = {}
         tests = {}
         exams = {}
@@ -117,7 +116,7 @@ def run(table_name, query):
         i = 1
         content += line
         content += "提醒事項：\n"
-        for subject, note in enumerate(notes):
+        for subject, note in notes.items():
             content += str(i) + ". "
             content += "（" + subjects[subject] + "）"
             if len(note) == 1:
@@ -139,16 +138,19 @@ def run(table_name, query):
         raise InputSyntaxError("Please check that you use the right syntax.")
 
 
-async def hello(websocket, path):
+async def reply(websocket, path):
     message = await websocket.recv()
     print(f"< {message}")
-    ret = run(table_name, message.split())
+    try:
+        ret = run(table_name, message.split())
+    except YPHSError as e:
+        ret = e
     if ret == None:
         ret = "finished!"
     await websocket.send(str(ret))
     print(f"> {ret}")
 
 if __name__ == "__main__":
-    start_server = websockets.serve(hello, "0.0.0.0", 443)
+    start_server = websockets.serve(reply, "0.0.0.0", 443)
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()

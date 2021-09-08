@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 import asyncio
 import websockets
-import ssl
 import pathlib
 import ssl
+import getpass
 
 greet = """
 您好。歡迎使用此聯絡簿登錄系統。
@@ -16,7 +17,8 @@ change \"id\" \"text\"
 remove \"id\"
 submit \"title\"
 
-P.S. type:
+P.S.
+類型:
 0. 功課
 1. 小考
 2. 週考或段考
@@ -28,7 +30,7 @@ ch: 國文
 en: 英文
 ma: 數學
 ph: 物理
-ch: 化學
+che: 化學
 bi: 生物
 es: 地科
 hi: 歷史
@@ -39,6 +41,7 @@ cr: 生科
 mu: 音樂
 ar: 美術
 ht: 導師
+coa: 輔導
 """
 
 ssl_context = ssl.SSLContext()
@@ -49,13 +52,17 @@ ssl_context.verify_mode = ssl.CERT_NONE
 async def query():
     uri = "wss://YPHS-HW.bydebug.repl.co"
     async with websockets.connect(uri, ssl=ssl_context) as websocket:
-        command = input("請輸入指令：")
-
-        await websocket.send(command)
-        print(f"> {command}")
-
-        rec = await websocket.recv()
-        print(f"< {rec}")
+        while True:
+            command = input("請輸入指令：")
+            if command=="quit":
+                break
+            if command[0:6]=="submit":
+                pw = getpass.getpass("請輸入密碼：")
+                command += ' ' + pw
+            await websocket.send(command)
+            print(f"> {command}")
+            rec = await websocket.recv()
+            print(f"< {rec}")
 
 
 if __name__ == "__main__":
