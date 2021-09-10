@@ -11,13 +11,7 @@ import datetime
 table_name = "HW107"
 
 line = "----------------------------------------------------------------------------------------\n"
-tab = "    "
-
-db = database("Homework.db")
-try:
-    db.create_table(table_name)
-except:
-    pass
+tab = "     "
 
 
 def run(table_name, query):
