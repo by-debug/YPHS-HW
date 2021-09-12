@@ -10,13 +10,12 @@ import datetime
 
 table_name = "HW107"
 
-db = database("Homework.db")
 line = "----------------------------------------------------------------------------------------\n"
 tab = "     "
 
 
 def run(table_name, query):
-    global db
+    db = database("Homework.db")
     if type(query) != list:
         raise YPHSError
     if query[0] == "add":
@@ -132,7 +131,9 @@ def run(table_name, query):
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
         new_HW(query[2], query[1], content, link)
+        del db
     else:
+        del db
         raise InputSyntaxError("Please check that you use the right syntax.")
 
 
