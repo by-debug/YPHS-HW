@@ -4,6 +4,7 @@ import websockets
 import pathlib
 import ssl
 import getpass
+from pprint import pprint
 
 greet = """
 您好。歡迎使用此聯絡簿登錄系統。
@@ -51,8 +52,8 @@ ssl_context.verify_mode = ssl.CERT_NONE
 
 async def query():
     uri = "wss://YPHS-HW.bydebug.repl.co"
+    command = input("請輸入指令：")
     async with websockets.connect(uri, ssl=ssl_context) as websocket:
-        command = input("請輸入指令：")
         if command[0:6] == "submit":
             pw = getpass.getpass("請輸入密碼：")
             await websocket.send(command + ' ' + pw)
@@ -60,7 +61,7 @@ async def query():
             await websocket.send(command)
         print(f"> {command}")
         rec = await websocket.recv()
-        print(f"< {rec}")
+        pprint(f"< {rec}")
 
 
 if __name__ == "__main__":
