@@ -27,7 +27,7 @@ class database:
 
     def select_by_id(self, table_name, id):
         result = self.db.execute(Template(
-            "SELECT * FROM $name WHERE id=\"$no\"").substitute(name=table_name, np=id)).fetchone()
+            "SELECT * FROM $name WHERE id=\"$no\"").substitute(name=table_name, no=id)).fetchone()
         return result
 
     def update(self, table_name, id, content):
