@@ -125,9 +125,10 @@ def run(table_name, query):
         db.update(table_name, query[1], query[2])
     elif query[0] == "show":
         if query[1] == "today":
-            return get_content(db)
+            content,link = get_content(db)
         else:
-            return get_content(db, query[1])
+            content,link = get_content(db, query[1])
+            return content + '\n' + line + "連結：\n" + link
     elif query[0] == "remove":
         db.delete(table_name, query[1])
     elif query[0] == "submit":
