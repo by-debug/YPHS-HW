@@ -130,7 +130,7 @@ def run(table_name, query):
             content,link = get_content(db, query[1])
             return content + '\n' + line + "連結：\n" + link
     elif query[0] == "show_id":
-        if query[1]!=today:
+        if query[1]!="today":
             return db.select(table_name,query[1])
         else:
             return db.select(table_name,query[1],datetime.datetime.now().strftime(
