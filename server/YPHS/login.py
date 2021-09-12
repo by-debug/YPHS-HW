@@ -59,7 +59,7 @@ def log_in(password):
         raise LogInError("Oops,now you're in " + web.url)
 
 
-def new_HW(password, title, content, link=""):
+def new_HW(password, title="", content, link=""):
     '''
     登錄新的聯絡簿
     '''
@@ -79,6 +79,8 @@ def new_HW(password, title, content, link=""):
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     variable = {"tbox_purport": title,
                 "tbox_content": content, "tbox_link": link}
+    if title == "":
+        variable["tbox_purport"]=soup.find(id="tbox_purport").get("value")
     for item in headers_data["data"]["save"]:
         if item not in variable:
             variable[item] = soup.find(id=item).get("value")
@@ -91,7 +93,7 @@ def remove_HW(password, target):
     '''
     global pw_hash, account, pw, cls_name, headers_data, web, session, url
     if hash(password) != pw_hash:
-        raise PasswordError("You're password is wrong.")
+        raise PasswordError("The password is wrong.")
     headers = headers_data["header"]["delete"]
     headers["Cookie"] = getCookies(session.cookies)
     soup = bs4.BeautifulSoup(web.text, "html.parser")

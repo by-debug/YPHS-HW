@@ -13,7 +13,6 @@ table_name = "HW107"
 line = "----------------------------------------------------------------------------------------\n"
 tab = "     "
 
-
 def run(table_name, query):
     db = database("Homework.db")
     if type(query) != list:

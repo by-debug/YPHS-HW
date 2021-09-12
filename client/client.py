@@ -16,7 +16,7 @@ add_old \"id\"
 show \"日期\"
 change \"id\" \"text\"
 remove \"id\"
-submit \"title\"
+submit (\"title\")
 
 P.S.
 類型:
@@ -54,6 +54,8 @@ async def query():
     uri = "wss://YPHS-HW.bydebug.repl.co"
     command = input("請輸入指令：")
     async with websockets.connect(uri, ssl=ssl_context) as websocket:
+        if command[0:4] == "quit":
+            return
         if command[0:6] == "submit":
             pw = getpass.getpass("請輸入密碼：")
             await websocket.send(command + ' ' + pw)
