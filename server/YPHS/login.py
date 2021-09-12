@@ -59,7 +59,7 @@ def log_in(password):
         raise LogInError("Oops,now you're in " + web.url)
 
 
-def new_HW(password, title="", content, link=""):
+def new_HW(password, title, content, link=""):
     '''
     登錄新的聯絡簿
     '''
@@ -79,7 +79,7 @@ def new_HW(password, title="", content, link=""):
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     variable = {"tbox_purport": title,
                 "tbox_content": content, "tbox_link": link}
-    if title == "":
+    if title == "today":
         variable["tbox_purport"]=soup.find(id="tbox_purport").get("value")
     for item in headers_data["data"]["save"]:
         if item not in variable:
