@@ -13,6 +13,105 @@ table_name = "HW107"
 line = "----------------------------------------------------------------------------------------\n"
 tab = "     "
 
+
+def get_content(db, date=datetime.datetime.now().strftime(
+        '%Y/%m/%d')):
+    global table_name, line, tab
+    HW = db.select(table_name, date)  # (id,type,day,subject,content)"
+    subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
+                "hi": "歷史", "ge": "地理", "ci": "公民", "co": "電腦", "cr": "生科", "mu": "音樂", "ar": "美術", "ht": "導師", "coa": "輔導"}
+    HWs = {}
+    tests = {}
+    exams = {}
+    notes = {}
+    link = ""
+    for i in HW:
+        if i[1] == "0":
+            if i[3] not in HWs:
+                HWs[i[3]] = [i[4]]
+            else:
+                HWs[i[3]].append(i[4])
+        elif i[1] == "1":
+            if i[3] not in tests:
+                tests[i[3]] = [i[4]]
+            else:
+                tests[i[3]].append(i[4])
+        elif i[1] == "2":
+            if i[3] not in exams:
+                exams[i[3]] = [i[4]]
+            else:
+                exams[i[3]].append(i[4])
+        elif i[1] == "3":
+            if i[3] not in notes:
+                notes[i[3]] = [i[4]]
+            else:
+                notes[i[3]].append(i[4])
+        else:
+            link = i[4]
+    content = ""
+    content += line
+    content += "作業：\n"
+    i = 1
+    for subject, HW in HWs.items():
+        content += str(i) + ". "
+        content += "（" + subjects[subject] + "）"
+        if len(HW) == 1:
+            content += HW[0] + '\n'
+        else:
+            j = 1
+            content += '\n'
+            for item in HW:
+                content += tab + "（" + str(j) + "）" + item + '\n'
+                j += 1
+        i += 1
+    i = 1
+    content += line
+    content += "小考：\n"
+    for subject, test in tests.items():
+        content += str(i) + ". "
+        content += "（" + subjects[subject] + "）"
+        if len(test) == 1:
+            content += test[0] + '\n'
+        else:
+            j = 1
+            content += '\n'
+            for item in test:
+                content += tab + "（" + str(j) + "）" + item + '\n'
+                j += 1
+        i += 1
+    i = 1
+    content += line
+    content += "週考或段考：\n"
+    for subject, exam in exams.items():
+        content += str(i) + ". "
+        content += "（" + subjects[subject] + "）"
+        if len(exam) == 1:
+            content += exam[0] + '\n'
+        else:
+            j = 1
+            content += '\n'
+            for item in exam:
+                content += tab + "（" + str(j) + "）" + item + '\n'
+                j += 1
+        i += 1
+    i = 1
+    content += line
+    content += "提醒事項：\n"
+    for subject, note in notes.items():
+        content += str(i) + ". "
+        content += "（" + subjects[subject] + "）"
+        if len(note) == 1:
+            content += note[0] + '\n'
+        else:
+            j = 1
+            content += '\n'
+            for item in note:
+                content += tab + "（" + str(j) + "）" + item + '\n'
+                j += 1
+        i += 1
+    return content
+
+
 def run(table_name, query):
     db = database("Homework.db")
     if type(query) != list:
@@ -25,104 +124,15 @@ def run(table_name, query):
     elif query[0] == "change":
         db.update(table_name, query[1], query[2])
     elif query[0] == "show":
-        return db.select(table_name, query[1])
+        if query[1] == "today":
+            return get_content(db)
+        else:
+            return get_content(db, query[1])
     elif query[0] == "remove":
         db.delete(table_name, query[1])
     elif query[0] == "submit":
         log_in(query[2])
-        HW = db.select(table_name, datetime.datetime.now().strftime(
-            '%Y/%m/%d'))  # (id,type,day,subject,content)"
-        subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
-                    "hi": "歷史", "ge": "地理", "ci": "公民", "co": "電腦", "cr": "生科", "mu": "音樂", "ar": "美術", "ht": "導師", "coa": "輔導"}
-        HWs = {}
-        tests = {}
-        exams = {}
-        notes = {}
-        link = ""
-        for i in HW:
-            if i[1] == "0":
-                if i[3] not in HWs:
-                    HWs[i[3]] = [i[4]]
-                else:
-                    HWs[i[3]].append(i[4])
-            elif i[1] == "1":
-                if i[3] not in tests:
-                    tests[i[3]] = [i[4]]
-                else:
-                    tests[i[3]].append(i[4])
-            elif i[1] == "2":
-                if i[3] not in exams:
-                    exams[i[3]] = [i[4]]
-                else:
-                    exams[i[3]].append(i[4])
-            elif i[1] == "3":
-                if i[3] not in notes:
-                    notes[i[3]] = [i[4]]
-                else:
-                    notes[i[3]].append(i[4])
-            else:
-                link = i[4]
-        content = ""
-        content += line
-        content += "作業：\n"
-        i = 1
-        for subject, HW in HWs.items():
-            content += str(i) + ". "
-            content += "（" + subjects[subject] + "）"
-            if len(HW) == 1:
-                content += HW[0] + '\n'
-            else:
-                j = 1
-                content += '\n'
-                for item in HW:
-                    content += tab + "（" + str(j) + "）" + item + '\n'
-                    j += 1
-            i += 1
-        i = 1
-        content += line
-        content += "小考：\n"
-        for subject, test in tests.items():
-            content += str(i) + ". "
-            content += "（" + subjects[subject] + "）"
-            if len(test) == 1:
-                content += test[0] + '\n'
-            else:
-                j = 1
-                content += '\n'
-                for item in test:
-                    content += tab + "（" + str(j) + "）" + item + '\n'
-                    j += 1
-            i += 1
-        i = 1
-        content += line
-        content += "週考或段考：\n"
-        for subject, exam in exams.items():
-            content += str(i) + ". "
-            content += "（" + subjects[subject] + "）"
-            if len(exam) == 1:
-                content += exam[0] + '\n'
-            else:
-                j = 1
-                content += '\n'
-                for item in exam:
-                    content += tab + "（" + str(j) + "）" + item + '\n'
-                    j += 1
-            i += 1
-        i = 1
-        content += line
-        content += "提醒事項：\n"
-        for subject, note in notes.items():
-            content += str(i) + ". "
-            content += "（" + subjects[subject] + "）"
-            if len(note) == 1:
-                content += note[0] + '\n'
-            else:
-                j = 1
-                content += '\n'
-                for item in note:
-                    content += tab + "（" + str(j) + "）" + item + '\n'
-                    j += 1
-            i += 1
+        content = get_content(db)
         content += line
         content += "每日一詞：\n"
         word = word_of_today()

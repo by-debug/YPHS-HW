@@ -6,10 +6,11 @@ import hashlib
 from YPHS.error import *
 import os
 
-pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221" #密碼的sha256 hash code，如果不知如何取得，請洽開發者
+# 密碼的sha256 hash code，如果不知如何取得，請洽開發者
+pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221"
 account = os.environ['account']
-  # 資訊股長帳號
-pw = os.environ['password'] #資訊股長密碼
+# 資訊股長帳號
+pw = os.environ['password']  # 資訊股長密碼
 cls_name = os.environ['class']  # 導班代號
 url = "https://www.yphs.tp.edu.tw/tea/tua-1.aspx"  # 延平後台網址
 with open("./server/YPHS/request.json") as ObjJson:  # 儲存header資訊
@@ -80,7 +81,7 @@ def new_HW(password, title, content, link=""):
     variable = {"tbox_purport": title,
                 "tbox_content": content, "tbox_link": link}
     if title == "today":
-        variable["tbox_purport"]=soup.find(id="tbox_purport").get("value")
+        variable["tbox_purport"] = soup.find(id="tbox_purport").get("value")
     for item in headers_data["data"]["save"]:
         if item not in variable:
             variable[item] = soup.find(id=item).get("value")
