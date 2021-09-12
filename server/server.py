@@ -132,8 +132,8 @@ def run(table_name, query):
         db.delete(table_name, query[1])
     elif query[0] == "submit":
         log_in(query[2])
-        content = get_content(db)
-        content,link += line
+        content,link = get_content(db)
+        content += line
         content += "每日一詞：\n"
         word = word_of_today()
         content += word[0] + '\n'
