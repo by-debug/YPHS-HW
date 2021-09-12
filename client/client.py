@@ -5,6 +5,8 @@ import pathlib
 import ssl
 import getpass
 from pprint import pprint
+from ast import literal_eval
+from sys import exit
 
 greet = """
 您好。歡迎使用此聯絡簿登錄系統。
@@ -14,9 +16,11 @@ greet = """
 add \"類型\" \"科目\" \"內容\"
 add_old \"id\"
 show \"日期\"
+show_id
 change \"id\" \"text\"
 remove \"id\"
 submit \"title\"(如果直接使用延平預設標題，則輸入today)
+quit
 
 P.S.
 類型:
@@ -63,7 +67,10 @@ async def query():
             await websocket.send(command)
         print(f"> {command}")
         rec = await websocket.recv()
-        print(rec)
+        if rec[0] == '[' and rec[-1] == ']':
+            pprint(literal_eval(rec))
+        else:
+            print(rec)
 
 
 if __name__ == "__main__":

@@ -129,6 +129,9 @@ def run(table_name, query):
         else:
             content,link = get_content(db, query[1])
             return content + '\n' + line + "連結：\n" + link
+    elif query[0] == "show_id":
+        return db.select(table_name,datetime.datetime.now().strftime(
+        '%Y/%m/%d'))
     elif query[0] == "remove":
         db.delete(table_name, query[1])
     elif query[0] == "submit":
