@@ -61,7 +61,7 @@ async def query():
             await websocket.send(command)
         print(f"> {command}")
         rec = await websocket.recv()
-        pprint(f"< {rec}")
+        pprint(recv)
 
 
 if __name__ == "__main__":
