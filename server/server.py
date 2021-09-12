@@ -109,7 +109,7 @@ def get_content(db, date=datetime.datetime.now().strftime(
                 content += tab + "（" + str(j) + "）" + item + '\n'
                 j += 1
         i += 1
-    return content
+    return content,link
 
 
 def run(table_name, query):
@@ -133,7 +133,7 @@ def run(table_name, query):
     elif query[0] == "submit":
         log_in(query[2])
         content = get_content(db)
-        content += line
+        content,link += line
         content += "每日一詞：\n"
         word = word_of_today()
         content += word[0] + '\n'
