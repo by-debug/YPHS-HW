@@ -38,3 +38,4 @@ class database:
     def delete(self, table_name, id):
         self.db.execute(Template("DELETE FROM $name WHERE id=\"$id\"").substitute(
             name=table_name, id=id))
+        self.db.commit()
