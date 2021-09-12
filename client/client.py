@@ -15,8 +15,8 @@ greet = """
 
 add \"類型\" \"科目\" \"內容\"
 add_old \"id\"
-show \"日期\"
-show_id
+show \"日期\"(如果想看今天的聯絡簿，可輸入today)
+show_id \"日期\"(如果想看今天的聯絡簿，可輸入today)
 change \"id\" \"text\"
 remove \"id\"
 submit \"title\"(如果直接使用延平預設標題，則輸入today)
