@@ -8,6 +8,7 @@ class database:
         self.db = sqlite3.connect(name)
 
     def __del__(self):
+        self.db.commit()
         self.db.close()
 
     def create_table(self, table_name):
