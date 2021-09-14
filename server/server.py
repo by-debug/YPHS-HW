@@ -113,7 +113,6 @@ def get_content(db, date=datetime.datetime.now().strftime(
 
 
 def run(table_name, query):
-    db = database("Homework.db")
     if type(query) != list:
         raise YPHSError
     if query[0] == "add":
@@ -147,9 +146,7 @@ def run(table_name, query):
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
         new_HW(query[2], query[1], content, link)
-        del db
     else:
-        del db
         raise InputSyntaxError("Please check that you use the right syntax.")
 
 
@@ -166,6 +163,7 @@ async def reply(websocket, path):
     print(f"> {ret}")
 
 if __name__ == "__main__":
+    db = database("Homework.db")
     start_server = websockets.serve(reply, "0.0.0.0", 443)
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
