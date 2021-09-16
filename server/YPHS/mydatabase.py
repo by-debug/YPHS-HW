@@ -8,31 +8,34 @@ import os
 usr = os.environ['ftpusr']
 psw = os.environ['ftppsw']
 
-def remote_connect(file_name,usr,psw):
-    self.server.set_debuglevel(2)
-    self.server.connect("203.72.178.240")
-    self.server.login(usr,psw)
-    self.server.cwd("./database")
-    with open(f"./{file_name}","wb") as w:
-        self.server.retrbinary(f'RETR ./{file_name}' , w.write)
 
-def remote_upload(file_name):
-    with open(f"./{file_name}","rb") as r:
-        self.server.storbinary(f"STOR ./{file_name}",r)
-    self.server.quit()
+def remote_connect(server, file_name, usr, psw):
+    server.set_debuglevel(2)
+    server.connect("203.72.178.240")
+    server.login(usr, psw)
+    server.cwd("./database")
+    with open(f"./{file_name}", "wb") as w:
+        server.retrbinary(f'RETR ./{file_name}', w.write)
+
+
+def remote_upload(server, file_name):
+    with open(f"./{file_name}", "rb") as r:
+        server.storbinary(f"STOR ./{file_name}", r)
+    server.quit()
+
 
 class database:
     def __init__(self, name):
-        global usr,psw
-        self.name=name
-        self.server=FTP()
-        remote_connect(name,usr,psw)
+        global usr, psw
+        self.name = name
+        self.server = FTP()
+        remote_connect(self.server, name, usr, psw)
         self.db = sqlite3.connect(name)
 
     def __del__(self):
         self.db.commit()
         self.db.close()
-        remote_upload(self.name)
+        remote_upload(self, server, self.name)
 
     def create_table(self, table_name):
         self.db.cursor()
