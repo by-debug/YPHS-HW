@@ -35,7 +35,7 @@ class database:
     def __del__(self):
         self.db.commit()
         self.db.close()
-        remote_upload(self, server, self.name)
+        remote_upload(self.server, self.name)
 
     def create_table(self, table_name):
         self.db.cursor()
