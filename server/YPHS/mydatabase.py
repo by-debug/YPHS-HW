@@ -14,12 +14,12 @@ def remote_connect(file_name,usr,psw):
     server.connect("203.72.178.240")
     server.login(usr,psw)
     server.cwd("./database")
-    with open(f"./{file_name}.db","wb") as w:
-        server.retrbinary(f'RETR ./{file_name}.db' , w.write)
+    with open(f"./{file_name}","wb") as w:
+        server.retrbinary(f'RETR ./{file_name}' , w.write)
 
 def remote_upload(file_name):
-    with open(f"./{file_name}.db","rb") as r:
-        server.storbinary(f"STOR ./{file_name}.db",r)
+    with open(f"./{file_name}","rb") as r:
+        server.storbinary(f"STOR ./{file_name}",r)
     server.quit()
 
 class database:
