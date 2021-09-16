@@ -16,7 +16,7 @@ tab = "     "
 db = database("Homework.db")
 
 
-def get_content(db, date):
+def get_content(db, date=datetime.datetime.now().strftime('%Y/%m/%d')):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
@@ -126,11 +126,10 @@ def run(table_name, query):
         db.update(table_name, query[1], query[2])
     elif query[0] == "show":
         if query[1] == "today":
-            content, link = get_content(db, datetime.datetime.now().strftime(
-                '%Y/%m/%d'))
+            content, link = get_content(db)
         else:
             content, link = get_content(db, query[1])
-            return content + '\n' + line + "連結：\n" + link
+        return content + '\n' + line + "連結：\n" + link
     elif query[0] == "show_id":
         if query[1] != "today":
             return db.select(table_name, query[1])
