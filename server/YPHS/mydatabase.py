@@ -1,15 +1,38 @@
 import sqlite3
 from string import Template
 import datetime
+import shutil
+from ftplib import FTP
+import os
 
+usr = os.environ['ftpusr']
+psw = os.environ['ftppsw']
+
+def remote_connect(file_name,usr,psw):
+    server=FTP()
+    server.set_debuglevel(2)
+    server.connect("203.72.178.240")
+    server.login(usr,psw)
+    server.cwd("./database")
+    with open(f"./{file_name}.db","wb") as w:
+        server.retrbinary(f'RETR ./{file_name}.db' , w.write)
+
+def remote_upload(file_name):
+    with open(f"./{file_name}.db","rb") as r:
+        server.storbinary(f"STOR ./{file_name}.db",r)
+    server.quit()
 
 class database:
     def __init__(self, name):
+        global usr,psw
+        self.name=name
+        remote_connect(name,usr,psw)
         self.db = sqlite3.connect(name)
 
     def __del__(self):
         self.db.commit()
         self.db.close()
+        remote_upload()
 
     def create_table(self, table_name):
         self.db.cursor()
