@@ -13,8 +13,10 @@ table_name = "HW107"
 line = "----------------------------------------------------------------------------------------\n"
 tab = "     "
 
+db = database("Homework.db")
 
-def get_content(db, date=datetime.datetime.now().strftime('%Y/%m/%d')):
+
+def get_content(db, date):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
@@ -108,10 +110,11 @@ def get_content(db, date=datetime.datetime.now().strftime('%Y/%m/%d')):
                 content += tab + "（" + str(j) + "）" + item + '\n'
                 j += 1
         i += 1
-    return content,link
+    return content, link
 
 
 def run(table_name, query):
+    global db
     if type(query) != list:
         raise YPHSError
     if query[0] == "add":
@@ -123,21 +126,22 @@ def run(table_name, query):
         db.update(table_name, query[1], query[2])
     elif query[0] == "show":
         if query[1] == "today":
-            content,link = get_content(db)
+            content, link = get_content(db, datetime.datetime.now().strftime(
+                '%Y/%m/%d'))
         else:
-            content,link = get_content(db, query[1])
+            content, link = get_content(db, query[1])
             return content + '\n' + line + "連結：\n" + link
     elif query[0] == "show_id":
-        if query[1]!="today":
-            return db.select(table_name,query[1])
+        if query[1] != "today":
+            return db.select(table_name, query[1])
         else:
-            return db.select(table_name,datetime.datetime.now().strftime(
-        '%Y/%m/%d'))
+            return db.select(table_name, datetime.datetime.now().strftime(
+                '%Y/%m/%d'))
     elif query[0] == "remove":
         db.delete(table_name, query[1])
     elif query[0] == "submit":
         log_in(query[2])
-        content,link = get_content(db)
+        content, link = get_content(db)
         content += line
         content += "每日一詞：\n"
         word = word_of_today()
@@ -145,7 +149,11 @@ def run(table_name, query):
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
         new_HW(query[2], query[1], content, link)
+        del db
+        db = database("Homework.db")
     else:
+        del db
+        db = database("Homework.db")
         raise InputSyntaxError("Please check that you use the right syntax.")
 
 
@@ -162,7 +170,6 @@ async def reply(websocket, path):
     print(f"> {ret}")
 
 if __name__ == "__main__":
-    db = database("Homework.db")
     start_server = websockets.serve(reply, "0.0.0.0", 443)
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
