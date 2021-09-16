@@ -157,16 +157,21 @@ def run(table_name, query):
 
 
 async def reply(websocket, path):
-    message = await websocket.recv()
-    print(f"< {message}")
+    global db
     try:
-        ret = run(table_name, message.split())
-    except YPHSError as e:
-        ret = e
-    if ret == None:
-        ret = "finished!"
-    await websocket.send(str(ret))
-    print(f"> {ret}")
+        message = await websocket.recv()
+        print(f"< {message}")
+        try:
+            ret = run(table_name, message.split())
+        except YPHSError as e:
+            ret = e
+        if ret == None:
+            ret = "finished!"
+        await websocket.send(str(ret))
+        print(f"> {ret}")
+    except:
+        del db
+        db = database("Homework.db")
 
 if __name__ == "__main__":
     start_server = websockets.serve(reply, "0.0.0.0", 443)
