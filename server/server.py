@@ -14,8 +14,7 @@ line = "------------------------------------------------------------------------
 tab = "     "
 
 
-def get_content(db, date=datetime.datetime.now().strftime(
-        '%Y/%m/%d')):
+def get_content(db, date=datetime.datetime.now().strftime('%Y/%m/%d')):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
