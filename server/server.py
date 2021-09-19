@@ -169,7 +169,7 @@ async def reply(websocket, path):
             ret = "finished!"
         await websocket.send(str(ret))
         print(f"> {ret}")
-    except websockets.exceptions.ConnectionClosed as e:
+    except Exception as e:
         del db
         db = database("Homework.db")
         raise e
