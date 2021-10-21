@@ -16,9 +16,14 @@ def remote_connect(server, file_name, usr, psw):
     server.cwd("./database")
     with open(f"./{file_name}", "wb") as w:
         server.retrbinary(f'RETR ./{file_name}', w.write)
+    server.quit()
 
 
-def remote_upload(server, file_name):
+def remote_upload(server, file_name, usr, psw):
+    server.set_debuglevel(2)
+    server.connect("203.72.178.240")
+    server.login(usr, psw)
+    server.cwd("./database")
     with open(f"./{file_name}", "rb") as r:
         server.storbinary(f"STOR ./{file_name}", r)
     server.quit()
@@ -33,9 +38,10 @@ class database:
         self.db = sqlite3.connect(name)
 
     def __del__(self):
+        global usr, psw
         self.db.commit()
         self.db.close()
-        remote_upload(self.server, self.name)
+        remote_upload(self.server, self.name, usr, psw)
 
     def create_table(self, table_name):
         self.db.cursor()
