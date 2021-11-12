@@ -128,7 +128,7 @@ def run(table_name, query):
     elif query[0] == "show":
         if query[1] == "today":
             content, link = get_content(db)
-            content += "\n" + datetime.datetime.now().strftime('%Y/%m/%d')
+            content += "\n" + datetime.datetime.now().strftime('%Y/%m/%d  %H:%M:%S')
         else:
             content, link = get_content(db, query[1])
             content += "\n" + query[1]
