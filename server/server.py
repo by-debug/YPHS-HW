@@ -120,7 +120,7 @@ def run(table_name, query):
     if query[0] == "add":
         db.insert(table_name, query[2], query[1], query[3])
     elif query[0] == "add_old":
-        for i in range(int(query[1]),int(query[2])):
+        for i in range(int(query[1]), int(query[2])):
             result = db.select_by_id(table_name, str(i))
             db.insert(table_name, result[3], result[1], result[4])
     elif query[0] == "change":
@@ -128,8 +128,10 @@ def run(table_name, query):
     elif query[0] == "show":
         if query[1] == "today":
             content, link = get_content(db)
+            content += "\n" + datetime.datetime.now().strftime('%Y/%m/%d')
         else:
             content, link = get_content(db, query[1])
+            content += "\n" + query[1]
         return content + '\n' + line + "連結：\n" + link
     elif query[0] == "show_id":
         if query[1] != "today":
