@@ -1,6 +1,5 @@
 import sqlite3
 from string import Template
-import datetime
 from datetime import datetime, timezone, timedelta
 import shutil
 from ftplib import FTP
