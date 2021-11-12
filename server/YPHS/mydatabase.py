@@ -1,9 +1,13 @@
 import sqlite3
 from string import Template
 import datetime
+from datetime import datetime, timezone, timedelta
 import shutil
 from ftplib import FTP
 import os
+
+dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
+dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
 
 usr = os.environ['ftpusr']
 psw = os.environ['ftppsw']
@@ -50,7 +54,7 @@ class database:
 
     def insert(self, table_name, subject, type_, content):
         self.db.execute(Template("INSERT INTO $name(type , day , subject , content ) VALUES(\"$type\" , \"$dat\" , \"$subject\" , \"$txt\" )").substitute(
-            name=table_name, dat=datetime.datetime.now().strftime('%Y/%m/%d'), type=type_, subject=subject, txt=content))
+            name=table_name, dat=dt2.strftime('%Y/%m/%d'), type=type_, subject=subject, txt=content))
         self.db.commit()
 
     def select(self, table_name, date):

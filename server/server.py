@@ -6,7 +6,9 @@ from YPHS.error import *
 from YPHS.mydatabase import database
 from YPHS.login import log_in, new_HW
 import getpass
-import datetime
+from datetime import datetime,timezone,timedelta
+dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
+dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
 
 table_name = "HW107"
 
@@ -16,7 +18,7 @@ tab = "     "
 db = database("Homework.db")
 
 
-def get_content(db, date=datetime.datetime.now().strftime('%Y/%m/%d')):
+def get_content(db, date=dt2.strftime('%Y/%m/%d')):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
@@ -137,7 +139,7 @@ def run(table_name, query):
         if query[1] != "today":
             return db.select(table_name, query[1])
         else:
-            return db.select(table_name, datetime.datetime.now().strftime(
+            return db.select(table_name, dt2.strftime(
                 '%Y/%m/%d'))
     elif query[0] == "remove":
         db.delete(table_name, query[1])
