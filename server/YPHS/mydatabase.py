@@ -34,6 +34,8 @@ def remote_upload(server, file_name, usr, psw):
 
 class database:
     def __init__(self, name):
+        dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
+        dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
         global usr, psw
         self.name = name
         self.server = FTP()
