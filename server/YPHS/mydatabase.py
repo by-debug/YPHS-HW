@@ -3,10 +3,11 @@ from string import Template
 from datetime import datetime, timezone, timedelta
 import shutil
 from ftplib import FTP
+import pytz
 import os
 
-dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
-dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
+tz_city = pytz.timezone('Asia/Taipei')
+dt2 = datetime.now(tz_city)
 
 usr = os.environ['ftpusr']
 psw = os.environ['ftppsw']
@@ -34,9 +35,9 @@ def remote_upload(server, file_name, usr, psw):
 
 class database:
     def __init__(self, name):
-        dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
-        dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
-        global usr, psw
+        global usr, psw, dt2
+        tz_city = pytz.timezone('Asia/Taipei')
+        dt2 = datetime.now(tz_city)
         self.name = name
         self.server = FTP()
         remote_connect(self.server, name, usr, psw)
