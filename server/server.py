@@ -130,11 +130,9 @@ def run(table_name, query):
     elif query[0] == "show":
         if query[1] == "today":
             content, link = get_content(db)
-            content += "\n" + dt2.strftime('%Y/%m/%d  %H:%M:%S')
         else:
             content, link = get_content(db, query[1])
-            content += "\n" + query[1]
-        return content + '\n' + line + "連結：\n" + link
+        return content + '\n' + line + "連結：\n" + link + "\n" + dt2.strftime('%Y/%m/%d  %H:%M:%S')
     elif query[0] == "show_id":
         if query[1] != "today":
             return db.select(table_name, query[1])
