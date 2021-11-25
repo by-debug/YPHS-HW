@@ -122,9 +122,12 @@ def run(table_name, query):
     if query[0] == "add":
         db.insert(table_name, query[2], query[1], query[3])
     elif query[0] == "add_old":
-        for i in range(int(query[1]), int(query[2])):
-            result = db.select_by_id(table_name, str(i))
-            db.insert(table_name, result[3], result[1], result[4])
+        for i in range(int(query[1]), int(query[2])+1):
+            try:
+                result = db.select_by_id(table_name, str(i))
+                db.insert(table_name, result[3], result[1], result[4])
+            except:
+                continue
     elif query[0] == "change":
         db.update(table_name, query[1], query[2])
     elif query[0] == "show":
@@ -140,7 +143,11 @@ def run(table_name, query):
             return db.select(table_name, dt2.strftime(
                 '%Y/%m/%d'))
     elif query[0] == "remove":
-        db.delete(table_name, query[1])
+        for i in range(int(query[1]), int(query[2])+1):
+            try:
+                db.delete(table_name, i)
+            except:
+                continue
     elif query[0] == "submit":
         log_in(query[2])
         content, link = get_content(db)
