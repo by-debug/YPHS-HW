@@ -7,6 +7,7 @@ from YPHS.mydatabase import database
 from YPHS.login import log_in, new_HW
 import getpass
 from datetime import datetime,timezone,timedelta
+import keep_alive
 dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
 dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
 
@@ -167,7 +168,7 @@ def run(table_name, query):
 
 
 async def reply(websocket, path):
-    global db
+    global db,dt2,dt1
     try:
         message = await websocket.recv()
         print(f"< {message}")
@@ -182,9 +183,15 @@ async def reply(websocket, path):
     except Exception as e:
         del db
         db = database("Homework.db")
+        dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
+        dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
         raise e
 
-if __name__ == "__main__":
+def main():
     start_server = websockets.serve(reply, "0.0.0.0", 443)
     asyncio.get_event_loop().run_until_complete(start_server)
     asyncio.get_event_loop().run_forever()
+
+if __name__=="__main__":
+    keep_alive.keep_alive()
+    main()
