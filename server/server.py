@@ -7,7 +7,7 @@ from YPHS.mydatabase import database
 from YPHS.login import log_in, new_HW
 import getpass
 from datetime import datetime,timezone,timedelta
-import keep_alive
+import YPHS.keep_alive
 dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
 dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
 
