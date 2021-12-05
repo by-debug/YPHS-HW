@@ -3,12 +3,10 @@ import websockets
 import asyncio
 from YPHS.webster import word_of_today
 from YPHS.error import *
-from YPHS.mydatabase import database
+from YPHS.mydatabase import database,get_current_time
 from YPHS.login import log_in, new_HW
 import getpass
-from datetime import datetime,timezone,timedelta
-dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
-dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
+from datetime import datetime
 
 table_name = "HW107"
 
@@ -18,7 +16,7 @@ tab = "     "
 db = database("Homework.db")
 
 
-def get_content(db, date=dt2.strftime('%Y/%m/%d')):
+def get_content(db, date=get_current_time()):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
@@ -135,13 +133,12 @@ def run(table_name, query):
             content, link = get_content(db)
         else:
             content, link = get_content(db, query[1])
-        return content + '\n' + line + "連結：\n" + link + "\n" + dt2.strftime('%Y/%m/%d  %H:%M:%S')
+        return content + '\n' + line + "連結：\n" + link + "\n" + get_current_time()
     elif query[0] == "show_id":
         if query[1] != "today":
             return db.select(table_name, query[1])
         else:
-            return db.select(table_name, dt2.strftime(
-                '%Y/%m/%d'))
+            return db.select(table_name, get_current_time())
     elif query[0] == "remove":
         for i in range(int(query[1]), int(query[2])+1):
             try:
@@ -167,7 +164,7 @@ def run(table_name, query):
 
 
 async def reply(websocket, path):
-    global db,dt2,dt1
+    global db
     try:
         message = await websocket.recv()
         print(f"< {message}")
@@ -182,8 +179,6 @@ async def reply(websocket, path):
     except Exception as e:
         del db
         db = database("Homework.db")
-        dt1 = datetime.utcnow().replace(tzinfo=timezone.utc)
-        dt2 = dt1.astimezone(timezone(timedelta(hours=8)))
         raise e
 
 def main():

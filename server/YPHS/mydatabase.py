@@ -1,17 +1,20 @@
 import sqlite3
 from string import Template
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
 import shutil
 from ftplib import FTP
-import pytz
+import requests
 import os
 
-tz_city = pytz.timezone('Asia/Taipei')
-dt2 = datetime.now(tz_city)
 
 usr = os.environ['ftpusr']
 psw = os.environ['ftppsw']
 
+def get_current_time():
+    site=requests.get("https://worldtimeapi.org/api/timezone/Asia/Taipei")
+    data=site.json()
+    day=datetime.fromisoformat(data["datetime"])
+    return day.strftime('%Y/%m/%d')
 
 def remote_connect(server, file_name, usr, psw):
     server.set_debuglevel(2)
@@ -36,8 +39,6 @@ def remote_upload(server, file_name, usr, psw):
 class database:
     def __init__(self, name):
         global usr, psw, dt2
-        tz_city = pytz.timezone('Asia/Taipei')
-        dt2 = datetime.now(tz_city)
         self.name = name
         self.server = FTP()
         remote_connect(self.server, name, usr, psw)
@@ -56,7 +57,7 @@ class database:
 
     def insert(self, table_name, subject, type_, content):
         self.db.execute(Template("INSERT INTO $name(type , day , subject , content ) VALUES(\"$type\" , \"$dat\" , \"$subject\" , \"$txt\" )").substitute(
-            name=table_name, dat=dt2.strftime('%Y/%m/%d'), type=type_, subject=subject, txt=content))
+            name=table_name, dat=get_current_time(), type=type_, subject=subject, txt=content))
         self.db.commit()
 
     def select(self, table_name, date):
