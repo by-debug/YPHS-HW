@@ -12,7 +12,7 @@ account = os.environ['account']
 # 資訊股長帳號
 pw = os.environ['password']  # 資訊股長密碼
 cls_name = os.environ['class']  # 導班代號
-url = "https://www.yphs.tp.edu.tw/tea/tua-1.aspx"  # 延平後台網址
+url = "https://lds.yphs.tp.edu.tw/tea/tua-1.aspx"  # 延平後台網址
 with open("./server/YPHS/request.json") as ObjJson:  # 儲存header資訊
     headers_data = json.load(ObjJson)
 web = None  # 後台網頁
@@ -41,7 +41,7 @@ def log_in(password):
     global pw_hash, account, pw, cls_name, headers_data, web, session, url
     if hash(password) != pw_hash:  # 驗證密碼
         raise PasswordError("You're password is wrong.")
-    url_login = "https://www.yphs.tp.edu.tw/tea/tua.aspx"
+    url_login = "https://lds.yphs.tp.edu.tw/tea/tua.aspx"
     headers = headers_data["header"]["loadpage"]
     headers1 = headers_data["header"]["login"]
     headers2 = headers_data["header"]["loadagain"]
@@ -59,7 +59,6 @@ def log_in(password):
     web_temp = session.post(url_login, headers=headers1, data=variable)
     headers2["Cookie"] = getCookies(session.cookies)
     web = session.get(url, headers=headers2)
-    print(web.text)
     if web.url != url:
         raise LogInError("Oops,now you're in " + web.url)
 
