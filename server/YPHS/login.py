@@ -51,7 +51,10 @@ def log_in(password):
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     for item in headers_data["data"]["login"]:
         if item not in variable:
-            variable[item] = soup.find(id=item).get("value")
+            try:
+                variable[item] = soup.find(id=item).get("value")
+            except AttributeError:
+                continue
     headers1["Cookie"] = getCookies(session.cookies)
     web_temp = session.post(url_login, headers=headers1, data=variable)
     headers2["Cookie"] = getCookies(session.cookies)
