@@ -51,14 +51,10 @@ def log_in(password):
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     for item in headers_data["data"]["login"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     headers1["Cookie"] = getCookies(session.cookies)
     web_temp = session.post(url_login, headers=headers1, data=variable)
     headers2["Cookie"] = getCookies(session.cookies)
-    print(web.text)
     web = session.get(url, headers=headers2)
     if web.url != url:
         raise LogInError("Oops,now you're in " + web.url)
@@ -78,10 +74,7 @@ def new_HW(password, title, content, link=""):
     variable = {}
     for item in headers_data["data"]["new"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     web_temp = session.post(url, headers=headers, data=variable)
     headers1["Cookie"] = getCookies(session.cookies)
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
@@ -91,10 +84,7 @@ def new_HW(password, title, content, link=""):
         variable["tbox_purport"] = soup.find(id="tbox_purport").get("value")
     for item in headers_data["data"]["save"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     web = session.post(url, headers=headers1, data=variable)
 
 
@@ -112,10 +102,7 @@ def remove_HW(password, target):
     variable[soup.find_all(value="刪除")[target].get("name")] = "刪除"
     for item in headers_data["data"]["delete"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     web = session.post(url, headers=headers, data=variable)
 
 
@@ -133,10 +120,7 @@ def change_HW(password, target, title, content, link=""):
     variable[soup.find_all(value="修改")[target].get("name")] = "修改"
     for item in headers_data["data"]["change"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     web_temp = session.post(url, headers=headers, data=variable)
     headers1 = headers_data["header"]["save"]
     headers1["Cookie"] = getCookies(session.cookies)
@@ -145,10 +129,7 @@ def change_HW(password, target, title, content, link=""):
                 "tbox_content": content, "tbox_link": link}
     for item in headers_data["data"]["save"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     web = session.post(url, headers=headers1, data=variable)
 
 
@@ -165,9 +146,6 @@ def log_out(password):
     variable = {}
     for item in headers_data["data"]["logout"]:
         if item not in variable:
-            try:
-                variable[item] = soup.find(id=item).get("value")
-            except AttributeError:
-                variable[item]=""
+            variable[item] = soup.find(id=item).get("value")
     web = session.post(url, headers=headers, data=variable)
     web = None
