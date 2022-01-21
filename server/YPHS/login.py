@@ -58,6 +58,7 @@ def log_in(password):
     headers1["Cookie"] = getCookies(session.cookies)
     web_temp = session.post(url_login, headers=headers1, data=variable)
     headers2["Cookie"] = getCookies(session.cookies)
+    print(web.text)
     web = session.get(url, headers=headers2)
     if web.url != url:
         raise LogInError("Oops,now you're in " + web.url)
