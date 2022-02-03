@@ -5,7 +5,6 @@ from YPHS.webster import word_of_today
 from YPHS.error import *
 from YPHS.mydatabase import database,get_current_time
 from YPHS.login import log_in, new_HW
-import getpass
 from datetime import datetime
 
 table_name = "HW107"
@@ -19,8 +18,9 @@ db = database("Homework.db")
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
-    subjects = {"ch": "國文", "en": "英文", "ma": "數學", "ph": "物理", "che": "化學", "bi": "生物", "es": "地科",
-                "hi": "歷史", "ge": "地理", "ci": "公民", "co": "電腦", "cr": "生科", "mu": "音樂", "ar": "美術", "ht": "導師", "coa": "輔導"}
+    subjects = {"chi": "國文", "eng": "英文", "mat": "數學", "phy": "物理", "che": "化學", "bio": "生物", "geos": "地科",
+                "his": "歷史", "geo": "地理", "cit": "公民", "com": "電腦", "lif": "生科", "mus": "音樂", "art": "美術", "hrt": "導師", 
+                "coa": "輔導","me":"資訊股長提醒","exp":"探究實作","pe":"體育",}#此為科目，可視需求更動
     HWs = {}
     tests = {}
     exams = {}

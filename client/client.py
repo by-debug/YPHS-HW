@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import asyncio
 import websockets
-import pathlib
 import ssl
 import getpass
 from pprint import pprint
@@ -14,13 +13,15 @@ greet = """
 （不須輸入引號）
 
 add \"類型\" \"科目\" \"內容\"
-add_old \"id\"
+add_old \"id_1\" \"id_2\" （新增區間：[id_1,id_2]）
 show \"日期\"(如果想看今天的聯絡簿，可輸入today)
 show_id \"日期\"(如果想看今天的聯絡簿，可輸入today)
 change \"id\" \"text\"
-remove \"id\"
+remove \"id_1\" \"id_2\" （刪除區間：[id_1,id_2]）
 submit \"title\"(如果直接使用延平預設標題，則輸入today)
 quit
+
+記得，輸入日期的格式為：yyyy/mm/dd（如果只有個位數要補零）（ex. 2022/02/03、1905/01/20......）
 
 P.S.
 類型:
@@ -31,22 +32,25 @@ P.S.
 4. 附件連結
 
 科目：
-ch: 國文
-en: 英文
-ma: 數學
-ph: 物理
+chi: 國文
+eng: 英文
+mat: 數學
+phy: 物理
 che: 化學
-bi: 生物
-es: 地科
-hi: 歷史
-ge: 地理
-ci: 公民
-co: 電腦
-cr: 生科
-mu: 音樂
-ar: 美術
-ht: 導師
+bio: 生物
+geos: 地科
+his: 歷史
+geo: 地理
+cit: 公民
+com: 電腦
+lif: 生科
+mus: 音樂
+art: 美術
+hrt: 導師
 coa: 輔導
+me: 資訊股長提醒
+exp: 探究實作
+pe: 體育
 """
 
 ssl_context = ssl.SSLContext()
