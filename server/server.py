@@ -20,7 +20,7 @@ def get_content(db, date=get_current_time()):
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"chi": "國文", "eng": "英文", "mat": "數學", "phy": "物理", "che": "化學", "bio": "生物", "geos": "地科",
                 "his": "歷史", "geo": "地理", "cit": "公民", "com": "電腦", "lif": "生科", "mus": "音樂", "art": "美術", "hrt": "導師", 
-                "coa": "輔導","me":"資訊股長提醒","exp":"探究實作","pe":"體育",}#此為科目，可視需求更動
+                "coa": "輔導","me":"資訊股長提醒","exp":"探究實作","pe":"體育",}
     HWs = {}
     tests = {}
     exams = {}
