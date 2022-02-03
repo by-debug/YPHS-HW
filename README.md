@@ -41,10 +41,16 @@ python setup.py
 9. 將login.py中第10行的pw_hash改成你所想要密碼的sha256
 10. 按下run
 
+執行成功畫面：
+![step10](https://i.imgur.com/F8mEEU1.png)
+
+
 #### 開始使用（client端）
 
 1. 從github中的release選擇一個你喜歡的版本下載
 2. 解壓縮zip
-3. 照著應用程式裡的說明開始使用
+3. 將其中的url一檔案以文字編輯器打開後，將url改成你的repl的網址（應可在執行畫面找到）
+![url](https://i.imgur.com/K4VSskK.png)
+4. 照著應用程式裡的說明開始使用
 
 關於以上說明，如果有任何問題，或者你發現有任何bug，請在Issue中提出，或者直接email到by20051002@gmail.com
