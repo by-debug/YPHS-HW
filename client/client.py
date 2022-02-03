@@ -59,7 +59,8 @@ ssl_context.verify_mode = ssl.CERT_NONE
 
 
 async def query():
-    url = "wss://YPHS-HW.bydebug.repl.co"
+    with open("./url","r") as file:
+        url = "wss://"+file.read()
     command = input("請輸入指令：")
     async with websockets.connect(url, ssl=ssl_context) as websocket:
         if command[0:4] == "quit":
