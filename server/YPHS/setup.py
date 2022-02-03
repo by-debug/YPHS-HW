@@ -1,4 +1,4 @@
-from YPHS.mydatabase import database
+from mydatabase import database
 
 table_name = "HW107"
 
