@@ -1,4 +1,4 @@
-./replit
-./poetry.lock
-./pyproject.toml
-./server/YPHS/Homework.db
+replit
+poetry.lock
+pyproject.toml
+server/YPHS/Homework.db
