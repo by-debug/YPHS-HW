@@ -1,7 +1,6 @@
 import sqlite3
 from string import Template
 from datetime import datetime
-import shutil
 from ftplib import FTP
 import requests
 import os
