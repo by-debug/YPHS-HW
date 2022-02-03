@@ -40,7 +40,10 @@ class database:
         global usr, psw, dt2
         self.name = name
         self.server = FTP()
-        remote_connect(self.server, name, usr, psw)
+        try:
+            remote_connect(self.server, name, usr, psw)
+        except:
+            pass
         self.db = sqlite3.connect(name)
 
     def __del__(self):
