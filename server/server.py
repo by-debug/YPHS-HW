@@ -4,7 +4,7 @@ import asyncio
 from YPHS.webster import word_of_today
 from YPHS.error import *
 from YPHS.mydatabase import database,get_current_time
-from YPHS.login import log_in, new_HW
+from YPHS.login import log_in, new_HW, log_out
 from datetime import datetime
 
 table_name = "HW107"
@@ -155,6 +155,7 @@ def run(table_name, query):
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
         new_HW(query[2], query[1], content, link)
+        log_out(query[2])
         del db
         db = database("Homework.db")
     else:
