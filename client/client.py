@@ -6,6 +6,8 @@ import getpass
 from pprint import pprint
 from ast import literal_eval
 from sys import exit
+import warnings
+warnings.filterwarnings("ignore")
 
 greet = """
 您好。歡迎使用此聯絡簿登錄系統。

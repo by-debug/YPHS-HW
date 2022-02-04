@@ -16,7 +16,6 @@ def get_current_time():
     return day.strftime('%Y/%m/%d')
 
 def remote_connect(server, file_name, usr, psw):
-    server.set_debuglevel(2)
     server.connect("203.72.178.240")
     server.login(usr, psw)
     server.cwd("./database")
