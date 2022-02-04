@@ -29,7 +29,7 @@ def getCookies(cookie_jar):
     '''
     從cookie-jar轉成header傳輸時的字串格式
     '''
-    cookie_dict = cookie_jar.get_dict(domain="www.yphs.tp.edu.tw")
+    cookie_dict = cookie_jar.get_dict(domain="lds.yphs.tp.edu.tw")
     found = ['%s=%s' % (name, value) for (name, value) in cookie_dict.items()]
     return ';'.join(found)
 
