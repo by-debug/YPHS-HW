@@ -52,6 +52,7 @@ def log_in(password):
     variable = {"tbox_acc": account, "tbox_pwd": pw, "tbox_cls": cls_name}
     session = requests.session()
     web_temp = session.get(url_login, headers=headers)
+    print(web_temp.text)
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     for item in headers_data["data"]["login"]:
         if item not in variable:
