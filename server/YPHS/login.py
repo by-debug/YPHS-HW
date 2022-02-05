@@ -8,6 +8,9 @@ import os
 import socks
 import socket
 import time
+from copy import deepcopy
+
+origin_socket=socket.socket
 
 # 密碼的sha256 hash code，如果不知如何取得，請洽開發者
 pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221"
@@ -146,7 +149,7 @@ def log_out(password):
     '''
     登出帳號
     '''
-    global pw_hash, account, pw, cls_name, headers_data, web, session, url
+    global pw_hash, account, pw, cls_name, headers_data, web, session, url, origin_socket
     if hash(password) != pw_hash:
         raise PasswordError("You're password is wrong.")
     headers = headers_data["header"]["logout"]
@@ -158,7 +161,6 @@ def log_out(password):
             variable[item] = soup.find(id=item).get("value")
     web = session.post(url, headers=headers, data=variable)
     web = None
-    socks.set_default_proxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
-    socket.socket = socks.socksocket
+    socket.socket = origin_socket
     time.sleep(5)
     print(requests.get("http://icanhazip.com").text)

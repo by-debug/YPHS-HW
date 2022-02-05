@@ -17,6 +17,8 @@ table_name = "HW107"
 line = "--------------------------------------------------------------------------------------\n"
 tab = "     "
 
+origin_socket=socket.socket
+
 db = database("Homework.db")
 
 
@@ -183,8 +185,7 @@ async def reply(websocket, path):
         await websocket.send(str(ret))
         print(f"> {ret}")
     except Exception as e:
-        socks.set_default_proxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=443)
-        socket.socket = socks.socksocket
+        socket.socket = origin_socket
         time.sleep(5)
         print(requests.get("http://icanhazip.com").text)
         del db
