@@ -5,6 +5,11 @@ import json
 import hashlib
 from YPHS.error import *
 import os
+import socks
+import socket
+
+socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
+socket.socket = socks.socksocket
 
 # 密碼的sha256 hash code，如果不知如何取得，請洽開發者
 pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221"
