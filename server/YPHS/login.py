@@ -77,12 +77,14 @@ def new_HW(password, title, content, link=""):
     headers = headers_data["header"]["new"]
     headers1 = headers_data["header"]["save"]
     soup = bs4.BeautifulSoup(web.text, "html.parser")
+    print(web.text)
     headers["Cookie"] = getCookies(session.cookies)
     variable = {}
     for item in headers_data["data"]["new"]:
         if item not in variable:
             variable[item] = soup.find(id=item).get("value")
     web_temp = session.post(url, headers=headers, data=variable)
+    print(web_temp.text)
     headers1["Cookie"] = getCookies(session.cookies)
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     variable = {"tbox_purport": title,

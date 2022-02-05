@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import imp
 import websockets
 import asyncio
 from YPHS.webster import word_of_today
@@ -6,6 +7,10 @@ from YPHS.error import *
 from YPHS.mydatabase import database,get_current_time
 from YPHS.login import log_in, new_HW, log_out
 from datetime import datetime
+import socks
+import socket
+import time
+import requests
 
 table_name = "HW107"
 
@@ -178,6 +183,10 @@ async def reply(websocket, path):
         await websocket.send(str(ret))
         print(f"> {ret}")
     except Exception as e:
+        socks.set_default_proxy(socks.SOCKS5, "localhost")
+        socket.socket = socks.socksocket
+        time.sleep(5)
+        print(requests.get("http://icanhazip.com").text)
         del db
         db = database("Homework.db")
         raise e
