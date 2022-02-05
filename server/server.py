@@ -155,9 +155,9 @@ def run(table_name, query):
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
         new_HW(query[2], query[1], content, link)
+        log_out(query[2])
         del db
         db = database("Homework.db")
-        log_out(query[2])
     else:
         del db
         db = database("Homework.db")

@@ -7,6 +7,7 @@ from YPHS.error import *
 import os
 import socks
 import socket
+import time
 
 # 密碼的sha256 hash code，如果不知如何取得，請洽開發者
 pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221"
@@ -45,6 +46,7 @@ def log_in(password):
         raise PasswordError("You're password is wrong.")
     socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
     socket.socket = socks.socksocket
+    print(requests.get("http://icanhazip.com").text)
     url_login = "https://lds.yphs.tp.edu.tw/tea/tua.aspx"
     headers = headers_data["header"]["loadpage"]
     headers1 = headers_data["header"]["login"]
@@ -156,3 +158,5 @@ def log_out(password):
     web = None
     socks.set_default_proxy(socks.SOCKS5, "localhost")
     socket.socket = socks.socksocket
+    time.sleep(5)
+    print(requests.get("http://icanhazip.com").text)
