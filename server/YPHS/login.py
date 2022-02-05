@@ -49,7 +49,7 @@ def log_in(password):
         raise PasswordError("You're password is wrong.")
     socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
     socket.socket = socks.socksocket
-    print(requests.get("http://icanhazip.com").text)
+    #(requests.get("http://icanhazip.com").text)
     url_login = "https://lds.yphs.tp.edu.tw/tea/tua.aspx"
     headers = headers_data["header"]["loadpage"]
     headers1 = headers_data["header"]["login"]
@@ -57,7 +57,7 @@ def log_in(password):
     variable = {"tbox_acc": account, "tbox_pwd": pw, "tbox_cls": cls_name}
     session = requests.session()
     web_temp = session.get(url_login, headers=headers)
-    print(web_temp.text)
+    #(web_temp.text)
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     for item in headers_data["data"]["login"]:
         if item not in variable:
@@ -80,14 +80,14 @@ def new_HW(password, title, content, link=""):
     headers = headers_data["header"]["new"]
     headers1 = headers_data["header"]["save"]
     soup = bs4.BeautifulSoup(web.text, "html.parser")
-    print(web.text)
+    #(web.text)
     headers["Cookie"] = getCookies(session.cookies)
     variable = {}
     for item in headers_data["data"]["new"]:
         if item not in variable:
             variable[item] = soup.find(id=item).get("value")
     web_temp = session.post(url, headers=headers, data=variable)
-    print(web_temp.text)
+    #(web_temp.text)
     headers1["Cookie"] = getCookies(session.cookies)
     soup = bs4.BeautifulSoup(web_temp.text, "html.parser")
     variable = {"tbox_purport": title,
@@ -163,4 +163,4 @@ def log_out(password):
     web = None
     socket.socket = origin_socket
     time.sleep(5)
-    print(requests.get("http://icanhazip.com").text)
+    #(requests.get("http://icanhazip.com").text)

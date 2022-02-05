@@ -187,7 +187,7 @@ async def reply(websocket, path):
     except Exception as e:
         socket.socket = origin_socket
         time.sleep(5)
-        print(requests.get("http://icanhazip.com").text)
+        #(requests.get("http://icanhazip.com").text)
         del db
         db = database("Homework.db")
         raise e
