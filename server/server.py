@@ -151,11 +151,11 @@ def run(table_name, query):
             except:
                 continue
     elif query[0] == "submit":
+        word = word_of_today()
         log_in(query[2])
         content, link = get_content(db)
         content += line
         content += "每日一詞：\n"
-        word = word_of_today()
         content += word[0] + '\n'
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
@@ -183,7 +183,7 @@ async def reply(websocket, path):
         await websocket.send(str(ret))
         print(f"> {ret}")
     except Exception as e:
-        socks.set_default_proxy(socks.SOCKS5, "localhost")
+        socks.set_default_proxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=443)
         socket.socket = socks.socksocket
         time.sleep(5)
         print(requests.get("http://icanhazip.com").text)

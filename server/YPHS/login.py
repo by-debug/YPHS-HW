@@ -158,7 +158,7 @@ def log_out(password):
             variable[item] = soup.find(id=item).get("value")
     web = session.post(url, headers=headers, data=variable)
     web = None
-    socks.set_default_proxy(socks.SOCKS5, "localhost")
+    socks.set_default_proxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
     socket.socket = socks.socksocket
     time.sleep(5)
     print(requests.get("http://icanhazip.com").text)
