@@ -2,12 +2,21 @@
 
 ##### 延平中學聯落簿登錄系統
 
-此軟體可將當日聯絡簿的內容排版後登錄至延平中學的網路聯絡簿，並在聯絡簿後方加上每日一詞。（來源：[Merriam-Webster Dictionary](https://www.merriam-webster.com/)）可配延平的電子班牌或電腦教室的電腦使用（使用前請告知並徵求導師同意）
+此軟體可將當日聯絡簿的內容排版後登錄至延平中學的網路聯絡簿，並在聯絡簿後方加上每日一詞（來源：[Merriam-Webster Dictionary](https://www.merriam-webster.com/)）。client.exe可搭配延平的電子班牌（使用前請告知並徵求導師同意）或電腦教室的電腦使用。
+
+#### 系統要求(client端)
+
+1. Windows(64 bit)
+
+#### 系統要求(server端)
+
+1. python 3.9以上
 
 #### 開始使用(Server端)（使用repl.it示範）
 
-1. 將此專案fork至您自己的github帳號
-2. 在[replit](https://replit.com/)建立帳號，並建立一個新的repl
+1. 在yphs ftp中開一個新的空白資料夾較database
+2. 將此專案fork至您自己的github帳號
+3. 在[replit](https://replit.com/)建立帳號，並建立一個新的repl
 
 ![step2](https://i.imgur.com/fVcz8fw.png)
 
@@ -39,7 +48,12 @@ python setup.py
 ![step8](https://i.imgur.com/SsuM2AH.png)
 
 9. 將login.py中第10行的pw_hash改成你所想要密碼的sha256
-10. 按下run
+10. 再度回到shell中，輸入以下程式碼
+```bash=
+install-pkg tor
+tor
+```
+11. 按下run
 
 執行成功畫面：
 ![step10](https://i.imgur.com/F8mEEU1.png)
@@ -53,4 +67,4 @@ python setup.py
 ![url](https://i.imgur.com/K4VSskK.png)
 4. 照著應用程式裡的說明開始使用
 
-關於以上說明，如果有任何問題，或者你發現有任何bug，請在Issue中提出，或者直接email到by20051002@gmail.com
+關於以上說明，如果有任何問題，或者發現任何bug，請在Issue中提出，或者直接email到by20051002@gmail.com
