@@ -175,7 +175,6 @@ async def reply(websocket, path):
     global db
     try:
         message = await websocket.recv()
-        print(f"< {message}")
         try:
             ret = run(table_name, message.split())
         except YPHSError as e:
@@ -187,7 +186,6 @@ async def reply(websocket, path):
     except Exception as e:
         socket.socket = origin_socket
         time.sleep(5)
-        #(requests.get("http://icanhazip.com").text)
         del db
         db = database("Homework.db")
         raise e
