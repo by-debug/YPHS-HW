@@ -10,7 +10,6 @@ from YPHS.login import log_in, new_HW, log_out
 from datetime import datetime
 import socket
 import time
-import subprocess
 
 table_name = "HW107"
 
@@ -21,12 +20,24 @@ origin_socket=socket.socket
 
 db = database("Homework.db")
 
+async def cmd(command):
+    proc = await asyncio.create_subprocess_shell(
+        cmd,
+        stderr=asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE
+    )
+    stdout, stderr = await proc.communicate()
+    if stdout:
+        print(f'[stdout]\n{stdout.decode()}')
+    if stderr:
+        print(f'[stderr]\n{stderr.decode()}')
+
 async def tor_connection():
     '''
     專門給repl.it使用，如果不是的話可以拿掉
     '''
-    subprocess.run(["install-pkg","tor"])
-    subprocess.run("tor")
+    cmd("install-pkg tor")
+    cmd("tor")
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
