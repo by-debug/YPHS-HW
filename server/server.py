@@ -27,10 +27,6 @@ async def cmd(command):
         stdout=asyncio.subprocess.PIPE
     )
     stdout, stderr = await proc.communicate()
-    if stdout:
-        print(f'[stdout]\n{stdout.decode()}')
-    if stderr:
-        print(f'[stderr]\n{stderr.decode()}')
 
 async def tor_connection():
     '''
