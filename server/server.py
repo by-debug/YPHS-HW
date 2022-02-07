@@ -11,6 +11,7 @@ import socks
 import socket
 import time
 import requests
+import os
 
 table_name = "HW107"
 
@@ -21,6 +22,12 @@ origin_socket=socket.socket
 
 db = database("Homework.db")
 
+async def tor_connection():
+    '''
+    專門給repl.it使用，如果不是的話可以拿掉
+    '''
+    os.system("install-pkg tor")
+    os.system("tor")
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
@@ -190,9 +197,12 @@ async def reply(websocket, path):
         db = database("Homework.db")
         raise e
 
-def main():
+async def gather():
     start_server = websockets.serve(reply, "0.0.0.0", 443)
-    asyncio.get_event_loop().run_until_complete(start_server)
+    result = await asyncio.gather(start_server,tor_connection)
+
+def main():
+    asyncio.get_event_loop().run_until_complete(gather())
     asyncio.get_event_loop().run_forever()
 
 if __name__=="__main__":
