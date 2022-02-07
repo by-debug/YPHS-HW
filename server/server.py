@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from asyncio import subprocess
 import imp
 import websockets
 import asyncio
@@ -7,11 +8,8 @@ from YPHS.error import *
 from YPHS.mydatabase import database,get_current_time
 from YPHS.login import log_in, new_HW, log_out
 from datetime import datetime
-import socks
 import socket
 import time
-import requests
-import os
 
 table_name = "HW107"
 
@@ -26,8 +24,8 @@ async def tor_connection():
     '''
     專門給repl.it使用，如果不是的話可以拿掉
     '''
-    os.system("install-pkg tor")
-    os.system("tor")
+    subprocess.run(["install-pkg","tor"])
+    subprocess.run("tor")
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
