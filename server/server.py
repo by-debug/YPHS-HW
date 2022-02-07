@@ -199,7 +199,7 @@ async def reply(websocket, path):
 
 async def gather():
     start_server = websockets.serve(reply, "0.0.0.0", 443)
-    result = await asyncio.gather(start_server,tor_connection)
+    result = await asyncio.gather(start_server,tor_connection())
 
 def main():
     asyncio.get_event_loop().run_until_complete(gather())
