@@ -9,8 +9,13 @@ import socks
 import socket
 import time
 from copy import deepcopy
+import os
 
 origin_socket=socket.socket
+
+#專門給repl.it使用，如果不是的話可以拿掉
+os.system("install-pkg tor")
+os.system("tor")
 
 # 密碼的sha256 hash code，如果不知如何取得，請洽開發者
 pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221"
