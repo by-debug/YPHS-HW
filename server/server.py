@@ -36,8 +36,8 @@ async def tor_connection():
     '''
     專門給repl.it使用，如果不是的話可以拿掉
     '''
-    cmd("install-pkg tor")
-    cmd("tor")
+    await cmd("install-pkg tor")
+    await cmd("tor")
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
