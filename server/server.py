@@ -22,7 +22,7 @@ db = database("Homework.db")
 
 async def cmd(command):
     proc = await asyncio.create_subprocess_shell(
-        cmd,
+        command,
         stderr=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE
     )
