@@ -10,6 +10,7 @@ from YPHS.login import log_in, new_HW, log_out
 from datetime import datetime
 import socket
 import time
+import subprocess
 
 table_name = "HW107"
 
