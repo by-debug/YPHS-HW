@@ -42,7 +42,7 @@
 		"login":
 		["__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION","tbox_acc","tbox_pwd","tbox_cls","but_login"],
 		"new":
-		["__EVENTTARGET","__EVENTARGUMENT","__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION","but_add"],
+		["__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION","but_add"],
 		"save":
 		["__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION","but_save","tbox_purport","tbox_content","tbox_link"],
 		"change":
@@ -50,7 +50,7 @@
 		"cancel":
 		["__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION","but_cancel","tbox_purport","tbox_content","tbox_link"],
 		"logout":
-		["__VIEWSTATE","__EVENTTARGET","__EVENTARGUMENT","__VIEWSTATEGENERATOR","__EVENTVALIDATION","but_logout"],
+		["__VIEWSTATE","__EVENTARGUMENT","__VIEWSTATEGENERATOR","__EVENTVALIDATION","but_logout"],
 		"delete":
 		["__VIEWSTATE","__VIEWSTATEGENERATOR","__EVENTVALIDATION"]
 	}
