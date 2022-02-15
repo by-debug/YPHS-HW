@@ -48,12 +48,7 @@ python setup.py
 ![step8](https://i.imgur.com/SsuM2AH.png)
 
 9. 將login.py中第10行的pw_hash改成你所想要密碼的sha256
-10. 再度回到shell中，輸入以下程式碼
-```bash=
-install-pkg tor
-tor
-```
-11. 按下run
+10. 按下run
 
 執行成功畫面：
 ![step10](https://i.imgur.com/F8mEEU1.png)
