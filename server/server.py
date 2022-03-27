@@ -20,6 +20,7 @@ origin_socket=socket.socket
 
 db = database("Homework.db")
 
+"""
 async def cmd(command):
     proc = await asyncio.create_subprocess_shell(
         command,
@@ -27,13 +28,15 @@ async def cmd(command):
         stdout=asyncio.subprocess.PIPE
     )
     stdout, stderr = await proc.communicate()
+"""
 
 async def tor_connection():
     '''
     專門給repl.it使用，如果不是的話可以拿掉
     '''
-    await cmd("install-pkg tor")
-    await cmd("tor")
+    #await cmd("install-pkg tor")
+    #await cmd("tor")
+    pass
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
