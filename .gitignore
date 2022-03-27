@@ -1,4 +1,2 @@
-replit
-poetry.lock
-pyproject.toml
 server/YPHS/Homework.db
+server/YPHS/__pycache__
