@@ -1,13 +1,7 @@
 import sqlite3
 from string import Template
 from datetime import datetime
-from ftplib import FTP
 import requests
-import os
-
-
-usr = os.environ['ftpusr']
-psw = os.environ['ftppsw']
 
 def get_current_time():
     site=requests.get("https://worldtimeapi.org/api/timezone/Asia/Taipei")
@@ -15,42 +9,17 @@ def get_current_time():
     day=datetime.fromisoformat(data["datetime"])
     return day.strftime('%Y/%m/%d')
 
-def remote_connect(server, file_name, usr, psw):
-    server.set_debuglevel(0)
-    server.connect("203.72.178.240")
-    server.login(usr, psw)
-    server.cwd("./database")
-    with open(f"./{file_name}", "wb") as w:
-        server.retrbinary(f'RETR ./{file_name}', w.write)
-    server.quit()
-
-
-def remote_upload(server, file_name, usr, psw):
-    server.set_debuglevel(2)
-    server.connect("203.72.178.240")
-    server.login(usr, psw)
-    server.cwd("./database")
-    with open(f"./{file_name}", "rb") as r:
-        server.storbinary(f"STOR ./{file_name}", r)
-    server.quit()
-
 
 class database:
     def __init__(self, name):
         global usr, psw, dt2
         self.name = name
-        self.server = FTP()
-        try:
-            remote_connect(self.server, name, usr, psw)
-        except:
-            pass
         self.db = sqlite3.connect(name)
 
     def __del__(self):
         global usr, psw
         self.db.commit()
         self.db.close()
-        remote_upload(self.server, self.name, usr, psw)
 
     def create_table(self, table_name):
         self.db.cursor()

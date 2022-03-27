@@ -8,17 +8,16 @@ import os
 import socks
 import socket
 import time
-from copy import deepcopy
 
 origin_socket=socket.socket
 
 
 # 密碼的sha256 hash code，如果不知如何取得，請洽開發者
 pw_hash = "1dc8229ac5c18df4b736c356d454165a01a80d27e5695390c5419fadb2dc2221"
-account = os.environ['account']
+account = os.environ.get('account',None)
 # 資訊股長帳號
-pw = os.environ['password']  # 資訊股長密碼
-cls_name = os.environ['class']  # 導班代號
+pw = os.environ.get('password',None)  # 資訊股長密碼
+cls_name = os.environ('class',None)  # 導班代號
 url = "https://lds.yphs.tp.edu.tw/tea/tua-1.aspx"  # 延平後台網址
 with open("./server/YPHS/request.json") as ObjJson:  # 儲存header資訊
     headers_data = json.load(ObjJson)

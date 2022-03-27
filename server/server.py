@@ -7,7 +7,6 @@ from YPHS.webster import word_of_today
 from YPHS.error import *
 from YPHS.mydatabase import database,get_current_time
 from YPHS.login import log_in, new_HW, log_out
-from datetime import datetime
 import socket
 import time
 
