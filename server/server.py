@@ -168,7 +168,7 @@ def run(table_name, query):
         raise InputSyntaxError("Please check that you use the right syntax.")
 
 @socketio.event
-def recv(data):
+def recv(sid,data):
     global db
     try:
         ret = run(table_name,data.split())
@@ -176,12 +176,11 @@ def recv(data):
             ret = "finished!"
         socketio.emit("to_client",ret)
         print(f"> {ret}")
-    except Exception as e:
+    except:
         socket.socket = origin_socket
         time.sleep(5)
         del db
         db = database("Homework.db")
-        raise e
 
 @app.route("/")
 def home():

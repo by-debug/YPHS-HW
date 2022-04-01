@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-import asyncio
-import websockets
 import ssl
 import getpass
 from pprint import pprint
