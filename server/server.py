@@ -167,14 +167,14 @@ def run(table_name, query):
         db = database("Homework.db")
         raise InputSyntaxError("Please check that you use the right syntax.")
 
-@socketio.on("send")
+@socketio.on("/send")
 def recv(data):
     global db
     try:
         ret = run(table_name,data.split())
         if ret == None:
             ret = "finished!"
-        socketio.send(ret)
+        socketio.emit("to_client",ret)
         print(f"> {ret}")
     except Exception as e:
         socket.socket = origin_socket

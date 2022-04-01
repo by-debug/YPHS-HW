@@ -7,6 +7,7 @@ from pprint import pprint
 from ast import literal_eval
 from sys import exit
 import warnings
+import socketio
 warnings.filterwarnings("ignore")
 
 greet = """
@@ -59,28 +60,27 @@ ssl_context = ssl.SSLContext()
 ssl_context.check_hostname = False
 ssl_context.verify_mode = ssl.CERT_NONE
 
+socio = socketio.Client()
 
-async def query():
-    with open("url","r") as file:
-        url = "wss://"+file.read()
-    command = input("請輸入指令：")
-    async with websockets.connect(url, ssl=ssl_context) as websocket:
-        if command[0:4] == "quit":
-            exit(0)
-        if command[0:6] == "submit":
-            pw = getpass.getpass("請輸入密碼：")
-            await websocket.send(command + ' ' + pw)
-        else:
-            await websocket.send(command)
-        print(f"> {command}")
-        rec = await websocket.recv()
-        if rec[0] == '[' and rec[-1] == ']':
-            pprint(literal_eval(rec))
-        else:
-            print(rec)
+@socio.event
+def to_client(data):
+    if data[0] == '[' and data[-1] == ']':
+        pprint(literal_eval(data))
+    else:
+        print(data)
 
 
 if __name__ == "__main__":
     print(greet)
+    with open("url","r") as file:
+        url = "https://"+file.read()
+    socio.connect(url,namespaces=["/send"])
     while True:
-        asyncio.get_event_loop().run_until_complete(query())
+        msg = input("請輸入指令：")
+        if msg[0:4] == "quit":
+            exit(0)
+        if msg[0:6] == "submit":
+            pw = getpass.getpass("請輸入密碼：")
+            socio.emit("recv",msg+" "+pw)
+        else:
+            socio.emit("recv",msg)
