@@ -74,7 +74,7 @@ if __name__ == "__main__":
     print(greet)
     with open("url","r") as file:
         url = "https://"+file.read()
-    socio.connect(url,namespaces=["/send"])
+    socio.connect(url)
     while True:
         msg = input("請輸入指令：")
         if msg[0:4] == "quit":

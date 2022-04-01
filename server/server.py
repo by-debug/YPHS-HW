@@ -167,7 +167,7 @@ def run(table_name, query):
         db = database("Homework.db")
         raise InputSyntaxError("Please check that you use the right syntax.")
 
-@socketio.on("/send")
+@socketio.event
 def recv(data):
     global db
     try:
