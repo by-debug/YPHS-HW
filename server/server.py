@@ -117,7 +117,6 @@ def get_content(db, date=get_current_time()):
         i += 1
     return content, link
 
-
 def run(table_name, query):
     global db
     if type(query) != list:
