@@ -167,14 +167,14 @@ def run(table_name, query):
         db = database("Homework.db")
         raise InputSyntaxError("Please check that you use the right syntax.")
 
-@socketio.event
-def recv(sid,data):
+@socketio.on("to server")
+def recv(data):
     global db
     try:
         ret = run(table_name,data.split())
         if ret == None:
             ret = "finished!"
-        socketio.emit("to_client",ret)
+        socketio.emit("to_client",{data:ret})
         print(f"> {ret}")
     except:
         socket.socket = origin_socket
@@ -187,4 +187,4 @@ def home():
     return render_template("index.html")
 
 if __name__=="__main__":
-    socketio.run(app,debug=True)
+    socketio.run(app,port=5000,debug=True)

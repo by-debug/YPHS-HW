@@ -5,7 +5,6 @@ import json
 import hashlib
 from YPHS.error import *
 import os
-import socks
 import socket
 import time
 

@@ -60,12 +60,12 @@ ssl_context.verify_mode = ssl.CERT_NONE
 
 socio = socketio.Client()
 
-@socio.event
-def to_client(data):
-    if data[0] == '[' and data[-1] == ']':
-        pprint(literal_eval(data))
+@socio.on("to client")
+def recv(data):
+    if data["data"][0] == '[' and data["data"][-1] == ']':
+        pprint(literal_eval(data["data"]))
     else:
-        print(data)
+        print(data["data"])
 
 
 if __name__ == "__main__":
@@ -76,6 +76,7 @@ if __name__ == "__main__":
     while True:
         msg = input("請輸入指令：")
         if msg[0:4] == "quit":
+            socio.disconnect()
             exit(0)
         if msg[0:6] == "submit":
             pw = getpass.getpass("請輸入密碼：")
