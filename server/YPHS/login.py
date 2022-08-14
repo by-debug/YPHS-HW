@@ -46,7 +46,7 @@ def log_in(password):
     global pw_hash, account, pw, cls_name, headers_data, web, session, url
     if hash(password) != pw_hash:  # 驗證密碼
         raise PasswordError("You're password is wrong.")
-    socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
+    #socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
     socket.socket = socks.socksocket
     url_login = "https://lds.yphs.tp.edu.tw/tea/tua.aspx"
     headers = headers_data["header"]["loadpage"]
