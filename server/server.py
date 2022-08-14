@@ -9,7 +9,7 @@ import os
 import signal
 import asyncio
 
-table_name = "HW107"
+table_name = "HW207"
 
 line = "--------------------------------------------------------------------------------------\n"
 tab = "     "
@@ -17,8 +17,6 @@ tab = "     "
 origin_socket=socket.socket
 
 db = database("Homework.db")
-
-app = Flask(__name__)
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
