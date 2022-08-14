@@ -1,1 +1,1 @@
-web: gunicorn –pythonpath 'server' server:app
+web: python server/server.py

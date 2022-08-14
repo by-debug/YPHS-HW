@@ -5,8 +5,9 @@ from YPHS.mydatabase import database,get_current_time
 from YPHS.login import log_in, new_HW, log_out
 import socket
 import time
-from flask import Flask, render_template
-from flask_socketio import SocketIO
+import os
+import signal
+import asyncio
 
 table_name = "HW107"
 
@@ -18,13 +19,12 @@ origin_socket=socket.socket
 db = database("Homework.db")
 
 app = Flask(__name__)
-socketio = SocketIO(app)
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
     HW = db.select(table_name, date)  # (id,type,day,subject,content)"
     subjects = {"chi": "國文", "eng": "英文", "mat": "數學", "phy": "物理", "che": "化學", "bio": "生物", "geos": "地科",
-                "his": "歷史", "geo": "地理", "cit": "公民", "com": "電腦", "lif": "生科", "mus": "音樂", "art": "美術", "hrt": "導師", 
+                "his": "歷史", "geo": "地理", "cit": "公民", "com": "電腦", "lif": "生科", "mus": "音樂",  "hrt": "導師", 
                 "coa": "輔導","me":"資訊股長提醒","exp":"探究實作","pe":"體育",}
     HWs = {}
     tests = {}
@@ -167,24 +167,33 @@ def run(table_name, query):
         db = database("Homework.db")
         raise InputSyntaxError("Please check that you use the right syntax.")
 
-@socketio.on("to server")
-def recv(data):
+async def reply(websocket, path):
     global db
+    message = await websocket.recv()
     try:
         ret = run(table_name,data.split())
         if ret == None:
             ret = "finished!"
-        socketio.emit("to_client",{data:ret})
         print(f"> {ret}")
+        await websocket.send(str(ret))
     except:
         socket.socket = origin_socket
         time.sleep(5)
         del db
         db = database("Homework.db")
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+async def main():
+    # Set the stop condition when receiving SIGTERM.
+    loop = asyncio.get_running_loop()
+    stop = loop.create_future()
+    loop.add_signal_handler(signal.SIGTERM, stop.set_result, None)
+
+    async with websockets.serve(
+        reply,
+        host="",
+        port=int(os.environ["PORT"]),
+    ):
+        await stop
 
 if __name__=="__main__":
-    socketio.run(app,port=5000,debug=True)
+    asyncio.run(main())
