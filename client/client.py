@@ -69,6 +69,7 @@ async def query():
             await websocket.send(command)
         print(f"> {command}")
         rec = await websocket.recv()
+        print(rec)
         if rec[0] == '[' and rec[-1] == ']':
             pprint(literal_eval(rec))
         else:
