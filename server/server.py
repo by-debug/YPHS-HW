@@ -170,7 +170,7 @@ def run(table_name, query):
 async def reply(websocket, path):
     global db
     message = await websocket.recv()
-    logging.info("Receive data")
+    print("Receive Message")
     try:
         ret = run(table_name,message.split())
         if ret == None:
