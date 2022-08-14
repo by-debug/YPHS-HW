@@ -9,6 +9,7 @@ import os
 import signal
 import asyncio
 import websockets
+import logging
 
 table_name = "HW207"
 
@@ -169,6 +170,7 @@ def run(table_name, query):
 async def reply(websocket, path):
     global db
     message = await websocket.recv()
+    logging.info("Receive data")
     try:
         ret = run(table_name,message.split())
         if ret == None:
