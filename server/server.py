@@ -19,6 +19,7 @@ tab = "     "
 origin_socket=socket.socket
 
 db = database("Homework.db")
+db.create_table(table_name)
 
 def get_content(db, date=get_current_time()):
     global table_name, line, tab
