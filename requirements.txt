@@ -1,7 +1,5 @@
 beautifulsoup4==4.11.1
-future==0.18.2
 httplib2==0.20.2
-idna==3.3
 Pillow==9.0.1
 requests==2.25.1
 urllib3==1.26.5
