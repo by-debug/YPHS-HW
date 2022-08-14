@@ -180,7 +180,6 @@ async def reply(websocket, path):
         time.sleep(5)
         del db
         db = database("Homework.db")
-        break
 
 async def main():
     # Set the stop condition when receiving SIGTERM.
