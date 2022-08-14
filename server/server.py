@@ -168,18 +168,20 @@ def run(table_name, query):
 
 async def reply(websocket, path):
     global db
-    message = await websocket.recv()
-    try:
-        ret = run(table_name,data.split())
-        if ret == None:
-            ret = "finished!"
-        print(f"> {ret}")
-        await websocket.send(str(ret))
-    except:
-        socket.socket = origin_socket
-        time.sleep(5)
-        del db
-        db = database("Homework.db")
+    while True:
+        message = await websocket.recv()
+        try:
+            ret = run(table_name,data.split())
+            if ret == None:
+                ret = "finished!"
+            print(f"> {ret}")
+            await websocket.send(str(ret))
+        except:
+            socket.socket = origin_socket
+            time.sleep(5)
+            del db
+            db = database("Homework.db")
+            break
 
 async def main():
     # Set the stop condition when receiving SIGTERM.
