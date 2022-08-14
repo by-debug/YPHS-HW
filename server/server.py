@@ -8,6 +8,7 @@ import time
 import os
 import signal
 import asyncio
+import websockets
 
 table_name = "HW207"
 
