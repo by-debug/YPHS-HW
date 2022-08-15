@@ -1,7 +1,10 @@
-import sqlite3
 from string import Template
 from datetime import datetime
 import requests
+import psycopg2
+import os
+
+url = os.environ.get(‘DATABASE_URL’)
 
 def get_current_time():
     site=requests.get("https://worldtimeapi.org/api/timezone/Asia/Taipei")
@@ -14,7 +17,8 @@ class database:
     def __init__(self, name):
         global usr, psw, dt2
         self.name = name
-        self.db = sqlite3.connect(name)
+        self.db = psycopg2.connect(DATABASE_URL)
+        self.db = self.db.cursor()
 
     def __del__(self):
         global usr, psw
