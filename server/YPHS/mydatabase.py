@@ -26,7 +26,6 @@ class database:
         self.db.close()
 
     def create_table(self, table_name):
-        self.db.cursor()
         self.db.execute(Template(
             "CREATE TABLE if not exists $name(id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
 
