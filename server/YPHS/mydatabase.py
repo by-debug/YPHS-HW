@@ -29,7 +29,7 @@ class database:
         cur.execute(Template("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name='$name')").substitute(name=table_name))
         if not cur.fetchone()[0]:
             cur.execute(Template(
-                "CREATE TABLE $name(id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
+                "CREATE TABLE $name(id SERIAL PRIMARY KEY,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
         cur.close()
 
     def insert(self, table_name, subject, type_, content):
