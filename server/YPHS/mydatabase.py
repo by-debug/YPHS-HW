@@ -41,16 +41,14 @@ class database:
 
     def select(self, table_name, date):
         cur = self.db.cursor()
-        results = cur.execute(Template(
-            "SELECT * FROM $name WHERE day='$day'").substitute(name=table_name, day=date)).fetchall()
-        cur.close()
-        return results
+        cur.execute(Template(
+            "SELECT * FROM $name WHERE day='$day'").substitute(name=table_name, day=date))
+        return cur.fetchall() 
     def select_by_id(self, table_name, id):
         cur = self.db.cursor()
-        result = cur.execute(Template(
-            "SELECT * FROM $name WHERE id='$no'").substitute(name=table_name, no=id)).fetchone()
-        cur.close()
-        return result
+        cur.execute(Template(
+            "SELECT * FROM $name WHERE id='$no'").substitute(name=table_name, no=id))
+        return cur.fetchone() 
 
     def update(self, table_name, id, content):
         cur = self.db.cursor()
