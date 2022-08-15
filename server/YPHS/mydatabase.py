@@ -42,10 +42,9 @@ class database:
     def select(self, table_name, date):
         cur = self.db.cursor()
         results = cur.execute(Template(
-            "SELECT * FROM $name WHERE day='$day'").substitute(name=table_name, day=date))
+            "SELECT * FROM $name WHERE day='$day'").substitute(name=table_name, day=date)).fetchall()
         cur.close()
-        return results.fetchall()
-
+        return results
     def select_by_id(self, table_name, id):
         cur = self.db.cursor()
         result = cur.execute(Template(
