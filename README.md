@@ -23,7 +23,7 @@
 
 1. 從github中的release選擇一個你喜歡的版本下載
 2. 解壓縮符合你的作業系統的zip
-3. 將其中的url一檔案以文字編輯器打開後，將url改成你的dyno的網址（應可在執行畫面找到）![](https://i.imgur.com/uME19Gs.png)+0.0.0.0。以此處為例，你需要將url內的網址改成 yphs-hw-test.herokuapp.com/.0.0.0.0
+3. 將其中的url一檔案以文字編輯器打開後，將url改成你的dyno的網址（應可在執行畫面找到）![](https://i.imgur.com/uME19Gs.png)+0.0.0.0。以此處為例，你需要將url內的網址改成 yphs-hw-test.herokuapp.com/0.0.0.0
 4. 照著應用程式裡的說明開始使用
 
 關於以上說明，如果有任何問題，或者你發現有任何bug，請在Issue中提出，或者直接email到by20051002@gmail.com。
