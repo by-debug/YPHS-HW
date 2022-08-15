@@ -26,7 +26,7 @@ class database:
 
     def create_table(self, table_name):
         cur = self.db.cursor()
-        cur.execute(Template("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name='$name')").substitute(name=table_name))
+        cur.execute(Template("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name = '$name' )").substitute(name=table_name))
         if not cur.fetchone()[0]:
             cur.execute(Template(
                 "CREATE TABLE $name(id SERIAL PRIMARY KEY,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
@@ -34,7 +34,7 @@ class database:
 
     def insert(self, table_name, subject, type_, content):
         cur = self.db.cursor()
-        cur.execute(Template("INSERT INTO $name(type , day , subject , content ) VALUES(\"$type\" , \"$dat\" , \"$subject\" , \"$txt\" )").substitute(
+        cur.execute(Template("INSERT INTO $name(type , day , subject , content ) VALUES('$type' , '$dat' , '$subject' , '$txt' )").substitute(
             name=table_name, dat=get_current_time(), type=type_, subject=subject, txt=content))
         self.db.commit()
         cur.close()
@@ -42,27 +42,27 @@ class database:
     def select(self, table_name, date):
         cur = self.db.cursor()
         results = cur.execute(Template(
-            "SELECT * FROM $name WHERE day=\"$day\"").substitute(name=table_name, day=date))
+            "SELECT * FROM $name WHERE day='$day'").substitute(name=table_name, day=date))
         cur.close()
         return results.fetchall()
 
     def select_by_id(self, table_name, id):
         cur = self.db.cursor()
         result = cur.execute(Template(
-            "SELECT * FROM $name WHERE id=\"$no\"").substitute(name=table_name, no=id)).fetchone()
+            "SELECT * FROM $name WHERE id='$no'").substitute(name=table_name, no=id)).fetchone()
         cur.close()
         return result
 
     def update(self, table_name, id, content):
         cur = self.db.cursor()
-        cur.execute(Template("UPDATE $name SET content = \"$content\" WHERE id = \"$id\"").substitute(
+        cur.execute(Template("UPDATE $name SET content = '$content' WHERE id = '$id'").substitute(
             name=table_name, id=id, content=content))
         self.db.commit()
         cur.close()
 
     def delete(self, table_name, id):
         cur = self.db.cursor()
-        cur.execute(Template("DELETE FROM $name WHERE id=\"$id\"").substitute(
+        cur.execute(Template("DELETE FROM $name WHERE id='$id'").substitute(
             name=table_name, id=id))
         self.db.commit()
         cur.close()
