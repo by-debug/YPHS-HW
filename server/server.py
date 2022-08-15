@@ -11,7 +11,7 @@ import asyncio
 import websockets
 import logging
 
-table_name = "HW207"
+table_name = "hw207"
 
 line = "--------------------------------------------------------------------------------------\n"
 tab = "     "
