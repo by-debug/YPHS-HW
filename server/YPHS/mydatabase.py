@@ -4,7 +4,7 @@ import requests
 import psycopg2
 import os
 
-url = os.environ.get(‘DATABASE_URL’)
+url = os.environ.get("DATABASE_URL")
 
 def get_current_time():
     site=requests.get("https://worldtimeapi.org/api/timezone/Asia/Taipei")
