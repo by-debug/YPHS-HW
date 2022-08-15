@@ -17,7 +17,7 @@ class database:
     def __init__(self, name):
         global usr, psw, dt2
         self.name = name
-        self.db = psycopg2.connect(DATABASE_URL)
+        self.db = psycopg2.connect(url)
         self.db = self.db.cursor()
 
     def __del__(self):
