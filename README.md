@@ -23,9 +23,30 @@
 
 #### 開始使用（client端）
 
-1. 從github中的release選擇一個你喜歡的版本下載
-2. 解壓縮符合你的作業系統的zip
-3. 將其中的url一檔案以文字編輯器打開後，將url改成你的dyno的網址（應可在執行畫面找到）![](https://i.imgur.com/uME19Gs.png)+0.0.0.0。以此處為例，你需要將url內的網址改成 yphs-hw-test.herokuapp.com (:warning:不要加https://)
+##### 下載可執行檔（Windows）
+
+1. 從github中的release選擇一個最新版（:warning: 2.0.0版之前的版本已經棄用）
+![](https://i.imgur.com/5Q3gBID.png)
+2. 下載並解壓縮zip檔
+3. 將其中的url一檔案以文字編輯器打開後，將url改成你的dyno的網址（應可在執行畫面找到）![](https://i.imgur.com/uME19Gs.png)。以此處為例，你需要將url內的網址改成 yphs-hw-test.herokuapp.com (:warning:不要加https://)
 4. 照著應用程式裡的說明開始使用
+
+##### 下載原始檔
+
+1. 確定你的電腦中安裝python，並安裝了websockets套件
+2. 在Github Repository中點選Code按鈕，使用git下載或者直接下載zip檔並解壓縮![](https://i.imgur.com/xSE1xBE.png)
+3.  在終端機中開啟client資料夾
+4. 依據你的作業系統，執行以下命令：
+
+Windows:
+```bash=
+python client.py
+```
+
+MacOs or Linux:
+```bash=
+python3 client.py
+```
+
 
 關於以上說明，如果有任何問題，或者你發現有任何bug，請在Issue中提出，或者直接email到by20051002@gmail.com。
