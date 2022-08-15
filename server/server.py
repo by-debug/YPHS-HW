@@ -124,6 +124,8 @@ def run(table_name, query):
         raise YPHSError
     if query[0] == "add":
         db.insert(table_name, query[2], query[1], query[3])
+    elif query[0] == "ping":
+        return "pong"
     elif query[0] == "add_old":
         for i in range(int(query[1]), int(query[2])+1):
             try:
