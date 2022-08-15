@@ -18,7 +18,6 @@ class database:
         global usr, psw, dt2
         self.name = name
         self.db = psycopg2.connect(url)
-        self.db = self.db.cursor()
 
     def __del__(self):
         global usr, psw
@@ -26,30 +25,42 @@ class database:
         self.db.close()
 
     def create_table(self, table_name):
-        self.db.execute(Template(
+        cur = self.db.cursor()
+        cur.execute(Template(
             "CREATE TABLE if not exists $name(id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
+        cur.close()
 
     def insert(self, table_name, subject, type_, content):
-        self.db.execute(Template("INSERT INTO $name(type , day , subject , content ) VALUES(\"$type\" , \"$dat\" , \"$subject\" , \"$txt\" )").substitute(
+        cur = self.db.cursor()
+        cur.execute(Template("INSERT INTO $name(type , day , subject , content ) VALUES(\"$type\" , \"$dat\" , \"$subject\" , \"$txt\" )").substitute(
             name=table_name, dat=get_current_time(), type=type_, subject=subject, txt=content))
         self.db.commit()
+        cur.close()
 
     def select(self, table_name, date):
-        results = self.db.execute(Template(
+        cur = self.db.cursor()
+        results = cur.execute(Template(
             "SELECT * FROM $name WHERE day=\"$day\"").substitute(name=table_name, day=date))
+        cur.close()
         return results.fetchall()
 
     def select_by_id(self, table_name, id):
-        result = self.db.execute(Template(
+        cur = self.db.cursor()
+        result = cur.execute(Template(
             "SELECT * FROM $name WHERE id=\"$no\"").substitute(name=table_name, no=id)).fetchone()
+        cur.close()
         return result
 
     def update(self, table_name, id, content):
-        self.db.execute(Template("UPDATE $name SET content = \"$content\" WHERE id = \"$id\"").substitute(
+        cur = self.db.cursor()
+        cur.execute(Template("UPDATE $name SET content = \"$content\" WHERE id = \"$id\"").substitute(
             name=table_name, id=id, content=content))
         self.db.commit()
+        cur.close()
 
     def delete(self, table_name, id):
-        self.db.execute(Template("DELETE FROM $name WHERE id=\"$id\"").substitute(
+        cur = self.db.cursor()
+        cur.execute(Template("DELETE FROM $name WHERE id=\"$id\"").substitute(
             name=table_name, id=id))
         self.db.commit()
+        cur.close()
