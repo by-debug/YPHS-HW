@@ -26,8 +26,10 @@ class database:
 
     def create_table(self, table_name):
         cur = self.db.cursor()
-        cur.execute(Template(
-            "IF NOT EXISTS(SELECT from pg_tables WHERE tablename = '$name') THEN CREATE TABLE $name(id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,day TEXT,subject TEXT,content TEXT) END IF;").substitute(name=table_name))
+        cur.execute(Template("SLECT EXISTS(SELECT * from information_schema.tables WHERE table_name='$name'").substitute(name=table_name))
+        if not cur.fetchone()[0]:
+            cur.execute(Template(
+                "CREATE TABLE $name(id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
         cur.close()
 
     def insert(self, table_name, subject, type_, content):
