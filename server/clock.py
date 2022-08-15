@@ -18,7 +18,7 @@ async def ping():
 
 async def main():
     global scheduler
-    scheduler.add_job(ping, "cron", hour="8-22", day_of_week='mon-fri')
+    scheduler.add_job(ping, "cron", hour="8-22", minute="*", day_of_week='mon-fri')
     scheduler.start()
 
 if __name__ == "__main__":
