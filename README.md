@@ -10,7 +10,7 @@
 2. 在[heroku](https://dashboard.heroku.com/)建立帳號，並建立一個新的dyno
 ![](https://i.imgur.com/LPHFY4W.png)
 
-3. 點進設定(settings)，到Config Vars選項，點選Reveal Config Vars![](https://i.imgur.com/t3ERW3I.png)點開之後，新增三個變數：account、password和class三個變數，分別填入學校資訊股長登入的帳號、密碼和班級代碼。![](https://i.imgur.com/q9xtX1c.png)
+3. 點進設定(settings)，到Config Vars選項，點選Reveal Config Vars![](https://i.imgur.com/t3ERW3I.png)點開之後，新增三個變數：account、password、class和name四個變數，分別填入學校資訊股長登入的帳號、密碼、班級代碼和APP名稱就是你剛剛建立dyno的時候用的名稱）。![](https://i.imgur.com/q9xtX1c.png)
 
 4. 點選Config Vars下方的Buildpacks選項，點選Add Buildpacks之後![](https://i.imgur.com/hkFV75F.png)，點選python。![](https://i.imgur.com/fyA3LXA.png)
 
