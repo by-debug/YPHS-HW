@@ -26,7 +26,7 @@ class database:
 
     def create_table(self, table_name):
         cur = self.db.cursor()
-        cur.execute(Template("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name='$name'").substitute(name=table_name))
+        cur.execute(Template("SELECT EXISTS(SELECT * from information_schema.tables WHERE table_name='$name')").substitute(name=table_name))
         if not cur.fetchone()[0]:
             cur.execute(Template(
                 "CREATE TABLE $name(id INTEGER PRIMARY KEY AUTOINCREMENT,type TEXT,day TEXT,subject TEXT,content TEXT)").substitute(name=table_name))
