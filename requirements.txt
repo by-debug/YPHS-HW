@@ -1,6 +1,6 @@
 beautifulsoup4==4.11.1
 httplib2==0.20.2
-Pillow==9.0.1
+Pillow==9.2.0
 requests==2.25.1
 urllib3==1.26.5
 websockets==10.3
