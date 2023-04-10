@@ -17,6 +17,7 @@ account = os.environ.get('account',None)
 # 資訊股長帳號
 pw = os.environ.get('password',None)  # 資訊股長密碼
 cls_name = os.environ.get('class',None)  # 導班代號
+cls_name = str(cls_name)
 url = "https://lds.yphs.tp.edu.tw/tea/tua-1.aspx"  # 延平後台網址
 with open("./server/YPHS/request.json") as ObjJson:  # 儲存header資訊
     headers_data = json.load(ObjJson)
@@ -44,10 +45,10 @@ def log_in(password):
     登入延平後台網站
     '''
     global pw_hash, account, pw, cls_name, headers_data, web, session, url
+    print(type(account),account)
+    print(type(cls_name),cls_name)
     if hash(password) != pw_hash:  # 驗證密碼
         raise PasswordError("You're password is wrong.")
-    #socks.setdefaultproxy(proxy_type=socks.PROXY_TYPE_SOCKS5, addr="127.0.0.1", port=9050)
-    #socket.socket = socks.socksocket
     url_login = "https://lds.yphs.tp.edu.tw/tea/tua.aspx"
     headers = headers_data["header"]["loadpage"]
     headers1 = headers_data["header"]["login"]
@@ -65,6 +66,8 @@ def log_in(password):
     web = session.get(url, headers=headers2)
     if web.url != url:
         raise LogInError("Oops,now you're in " + web.url)
+    else:
+        print("Login success.")
 
 
 def new_HW(password, title, content, link=""):

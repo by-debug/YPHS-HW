@@ -9,7 +9,7 @@ import os
 import signal
 import asyncio
 import websockets
-import logging
+import traceback
 
 table_name = "hw207"
 
@@ -21,12 +21,12 @@ origin_socket=socket.socket
 db = database("Homework.db")
 db.create_table(table_name)
 
-def get_content(db, date=get_current_time()):
+def get_content(db, date_):
     global table_name, line, tab
-    HW = db.select(table_name, date)  # (id,type,day,subject,content)"
+    HW = db.select(table_name, date_)  # (id,type,day,subject,content)"
     subjects = {"chi": "國文", "eng": "英文", "mat": "數學", "phy": "物理", "che": "化學", "bio": "生物", "geos": "地科",
                 "his": "歷史", "geo": "地理", "cit": "公民", "com": "電腦", "lif": "生科", "mus": "音樂",  "hrt": "導師", 
-                "coa": "輔導","me":"資訊股長提醒","exp":"探究實作","pe":"體育",}
+                "coa": "輔導","me":"資訊股長提醒","exp":"探究實作","pe":"體育","art":"美術",}
     HWs = {}
     tests = {}
     exams = {}
@@ -137,7 +137,7 @@ def run(table_name, query):
         db.update(table_name, query[1], query[2])
     elif query[0] == "show":
         if query[1] == "today":
-            content, link = get_content(db)
+            content, link = get_content(db,get_current_time())
         else:
             content, link = get_content(db, query[1])
         return content + '\n' + line + "連結：\n" + link + "\n" + get_current_time()
@@ -155,7 +155,7 @@ def run(table_name, query):
     elif query[0] == "submit":
         word = word_of_today()
         log_in(query[2])
-        content, link = get_content(db)
+        content, link = get_content(db,get_current_time())
         content += line
         content += "每日一詞：\n"
         content += word[0] + '\n'
@@ -183,7 +183,7 @@ async def reply(websocket, path):
     except Exception as e:
         socket.socket = origin_socket
         time.sleep(5)
-        print(e)
+        traceback.print_exc()
         del db
         db = database("Homework.db")
 
