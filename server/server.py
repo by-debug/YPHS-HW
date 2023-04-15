@@ -10,6 +10,7 @@ import signal
 import asyncio
 import websockets
 import traceback
+from YPHS.countdown import get_countdown
 
 table_name = "hw207"
 
@@ -17,6 +18,20 @@ line = "------------------------------------------------------------------------
 tab = "     "
 
 origin_socket=socket.socket
+
+target_date = os.environ.get('TargetDate')
+
+show_date = bool(os.environ.get('Countdown', False))
+
+def get_countdown():
+    '''
+    return line+"學測倒數:"+coundown() if show_date is True else return ""
+    '''
+    global target_date, show_date
+    if show_date:
+        return line+"學測倒敷:"+get_countdown(target_date)
+    else:
+        return ""
 
 db = database("Homework.db")
 db.create_table(table_name)
@@ -116,6 +131,7 @@ def get_content(db, date_):
                 content += tab + "（" + str(j) + "）" + item + '\n'
                 j += 1
         i += 1
+    content += get_countdown()
     return content, link
 
 def run(table_name, query):
