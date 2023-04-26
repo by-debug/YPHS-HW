@@ -10,7 +10,7 @@ import signal
 import asyncio
 import websockets
 import traceback
-from YPHS.countdown import get_countdown
+from YPHS.countdown import countdown
 
 table_name = "hw207"
 
@@ -29,7 +29,7 @@ def get_countdown():
     '''
     global target_date, show_date
     if show_date:
-        return line+"學測倒敷:"+get_countdown(target_date)
+        return f"學測倒敷:{countdown(target_date)}天\n"
     else:
         return ""
 
@@ -131,7 +131,6 @@ def get_content(db, date_):
                 content += tab + "（" + str(j) + "）" + item + '\n'
                 j += 1
         i += 1
-    content += get_countdown()
     return content, link
 
 def run(table_name, query):
@@ -177,6 +176,9 @@ def run(table_name, query):
         content += word[0] + '\n'
         content += "-> " + word[1] + '\n'
         content += "(from Webster's Dictionary)\n"
+        content += line
+        content += get_countdown()
+        content += line
         new_HW(query[2], query[1], content, link)
         log_out(query[2])
         del db
