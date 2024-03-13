@@ -1,8 +1,8 @@
 beautifulsoup4==4.11.1
 httplib2==0.20.2
-Pillow==9.3.0
-requests>=2.31.0
-urllib3==1.26.5
+Pillow==10.2.0
+requests==2.31.0
+urllib3==1.26.18
 websockets==10.3
 apscheduler==3.9.1
 psycopg2-binary==2.9.5
